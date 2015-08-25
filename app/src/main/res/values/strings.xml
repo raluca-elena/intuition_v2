@@ -1,6 +1,10 @@
 <resources>
-    <string name="app_name">Extuition</string>
-
+    <string name="app_name">MomIntuition</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_sign_in">SignIn</string>
+    <string name="title_activity_sign_up">SignUp</string>
+    <string name="user">john.dow@mymail.com</string>
+    <string name="title_activity_activity_chooser">ActivityChooser</string>
+    <string name="title_activity_first_page_animation">FirstPageAnimation</string>
 </resources>
