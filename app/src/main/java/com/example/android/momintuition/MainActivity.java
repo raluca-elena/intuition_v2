@@ -1,4 +1,4 @@
-package com.example.android.extuition;
+package com.example.android.momintuition;
 
 import android.app.Activity;
 import android.os.Bundle;
