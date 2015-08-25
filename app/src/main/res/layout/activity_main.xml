@@ -1,36 +1,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" android:layout_centerHorizontal="true"
+    android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
-    android:paddingTop="100dp"
     android:background="#ffcc5aa2"
+    android:orientation="vertical"
+    android:paddingTop="100dp"
     tools:context="com.example.android.momintuition.MainActivity">
 
-<Button
-android:id="@+id/buttonSignup"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="          Signup          "
-android:onClick="onButtonClicked"
-android:layout_gravity="center"/>
+    <Button
+        android:id="@+id/buttonSignup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="onButtonClicked"
+        android:text="          Signup          " />
 
 
-<Button
-android:id="@+id/buttonSignin"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="          Signin           "
-android:onClick="onButtonClicked"
-android:layout_gravity="center"/>
+    <Button
+        android:id="@+id/buttonSignin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="onButtonClicked"
+        android:text="          Signin           " />
 
     <Button
         android:id="@+id/buttonAnim"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="          Animation           "
+        android:layout_gravity="center"
         android:onClick="onButtonClicked"
-        android:layout_gravity="center"/>
+        android:text="          Animation           " />
 
 </LinearLayout>
 

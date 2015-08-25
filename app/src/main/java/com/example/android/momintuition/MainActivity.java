@@ -3,26 +3,21 @@ package com.example.android.momintuition;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.Button;
-import android.widget.Toast;
-
-import java.util.zip.Inflater;
 
 
 public class MainActivity extends Activity {
 
     private static Context context;
+
+    public static Context getAppContext() {
+        return MainActivity.context;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,64 +26,55 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
         drawButtons();
-}
+    }
+
+    void drawButtons() {
+        final Button x = (Button) findViewById(R.id.buttonSignin);
+        final Button y = (Button) findViewById(R.id.buttonSignup);
+        final Button z = (Button) findViewById(R.id.buttonAnim);
+
+        View.OnClickListener l = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("BUTTON", "Signin");
+                FetchCoordinates fetchCordinates = new FetchCoordinates(getApplicationContext());
+                fetchCordinates.execute();
+
+                //Intent i;
+                //i = new Intent(getAppContext(), SignIn.class);
+                //startActivity(i);
+
+            }
+        };
 
 
-        void drawButtons() {
-            final Button x = (Button) findViewById(R.id.buttonSignin);
-            final Button y = (Button) findViewById(R.id.buttonSignup);
-            final Button z = (Button) findViewById(R.id.buttonAnim);
+        View.OnClickListener l1 = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("BUTTON", "Signup");
+                Intent i;
+                i = new Intent(getApplicationContext(), ActivityChooser.class);
+                startActivity(i);
 
-            View.OnClickListener l = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.i("BUTTON", "Signin");
-                    FetchCoordinates fetchCordinates = new FetchCoordinates(getApplicationContext());
-                    fetchCordinates.execute();
-
-                    //Intent i;
-                    //i = new Intent(getAppContext(), SignIn.class);
-                    //startActivity(i);
-
-                }
-            };
+            }
+        };
 
 
-            View.OnClickListener l1 = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.i("BUTTON", "Signup");
-                    Intent i;
-                    i = new Intent(getApplicationContext(), ActivityChooser.class);
-                    startActivity(i);
+        View.OnClickListener l2 = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("BUTTON", "Animate");
+                Intent i;
+                i = new Intent(getApplicationContext(), FirstPageAnimation.class);
+                startActivity(i);
 
-                }
-            };
+            }
+        };
 
+        x.setOnClickListener(l);
+        y.setOnClickListener(l1);
+        z.setOnClickListener(l2);
 
-            View.OnClickListener l2 = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.i("BUTTON", "Animate");
-                    Intent i;
-                    i = new Intent(getApplicationContext(), FirstPageAnimation.class);
-                    startActivity(i);
-
-                }
-            };
-
-            x.setOnClickListener(l);
-            y.setOnClickListener(l1);
-            z.setOnClickListener(l2);
-
-        }
-
-
-
-
-
-    public static Context getAppContext() {
-        return MainActivity.context;
     }
 
     @Override
@@ -114,5 +100,5 @@ public class MainActivity extends Activity {
     }
 
 
-    }
+}
 
