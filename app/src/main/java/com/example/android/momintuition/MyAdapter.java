@@ -16,11 +16,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             Log.i("this view was clicked", "GET THE ID ");
         }
     };
-    private String[] mDataset;
+    private String[][] mDataset = new String [4][2];
 
 
-    public MyAdapter(String[] myDataset) {
+    public MyAdapter(String[][] myDataset) {
         mDataset = myDataset;
+        Log.i("BUBA" , myDataset.length + "");
     }
 
     @Override
@@ -28,8 +29,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        holder.title.setText(mDataset[position]);
-        holder.activity.setText(mDataset[1]);
+        holder.title.setText(mDataset[position][0]);
+        holder.activity.setText(mDataset[position][1]);
+
         if (position % 2 == 0) {
             holder.img.setCropToPadding(true);
             holder.img.setImageResource(R.drawable.bear);

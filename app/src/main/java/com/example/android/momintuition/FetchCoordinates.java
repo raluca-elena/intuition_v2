@@ -63,7 +63,7 @@ public class FetchCoordinates extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... params) {
 
-        Log.i("DO I EVER GET HERE", "YEY");
+        Log.i("LOcation update", "YEY");
         ll = new mLocationListener();
         //????
         mLocationManager = (LocationManager) c.getSystemService(Context.LOCATION_SERVICE);
