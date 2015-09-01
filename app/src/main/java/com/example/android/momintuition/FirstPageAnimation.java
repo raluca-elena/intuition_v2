@@ -10,7 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Interpolator;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -59,12 +62,22 @@ public class FirstPageAnimation extends ActionBarActivity {
         addContentView(circularSeekbar, v.getLayoutParams());
         CircularSeekBarAnimation anim = new CircularSeekBarAnimation(circularSeekbar, 0, 100);
         anim.setDuration(7000);
+        anim.setInterpolator(new MVAccelerateDecelerateInterpolator());
         circularSeekbar.startAnimation(anim);
 
     }
 
 
+    public class MVAccelerateDecelerateInterpolator implements Interpolator {
 
+        // easeInOutQuint
+        public float getInterpolation(float t) {
+            float x = t*2.0f;
+            if (t<0.5f) return 0.5f*x*x*x*x*x;
+            x = (t-0.5f)*2-1;
+            return 0.5f*x*x*x*x*x+1;
+        }
+    }
 /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
