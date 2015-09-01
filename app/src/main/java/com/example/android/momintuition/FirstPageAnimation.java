@@ -1,5 +1,6 @@
 package com.example.android.momintuition;
 
+import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +8,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -35,24 +38,34 @@ public class FirstPageAnimation extends ActionBarActivity {
 
         circularSeekbar = new CircularSeekBar(this);
         circularSeekbar.adjustRadius(6, 2);
-
         circularSeekbar.setMaxProgress(100);
         circularSeekbar.setProgress(0);
-        addContentView(circularSeekbar, v.getLayoutParams());
 
-        circularSeekbar.setSeekBarChangeListener(new CircularSeekBar.OnSeekChangeListener() {
+        circularSeekbar.setAngle(10);
+
+      /*  circularSeekbar.setSeekBarChangeListener(new CircularSeekBar.OnSeekChangeListener() {
 
             @Override
             public void onProgressChange(CircularSeekBar view, int newProgress) {
-                //Log.d("Welcome", "Progress:" + view.getProgress() + "/" + view.getMaxProgress());
+
+                Log.i("progress so far", view.getProgress() + "");
+
+                //Log.i("progress", newProgress + "");
+                //circularSeekbar.setProgress(newProgress );
+
             }
-        });
+        });*/
 
-        //circularSeekbar.setProgress(circularSeekbar.getProgressPercent() + 10);
-
+        addContentView(circularSeekbar, v.getLayoutParams());
+        CircularSeekBarAnimation anim = new CircularSeekBarAnimation(circularSeekbar, 0, 100);
+        anim.setDuration(7000);
+        circularSeekbar.startAnimation(anim);
 
     }
 
+
+
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -69,9 +82,19 @@ public class FirstPageAnimation extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Log.i("ZOMG", "Asdf");
+
+            //anim.startNow();
+
+            //View parent = (View)circularSeekbar.getParent();
+
+            //parent.invalidate();
+            //circularSeekbar.requestLayout();
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+    */
 }

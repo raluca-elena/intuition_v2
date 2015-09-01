@@ -44,7 +44,7 @@ public class CircularSeekBar extends View {
      */
     private int angle = 0;
     /**
-     * The start angle (12 O'clock
+     * The start angle (12 O'clock -- first angle drawn
      */
     private int startAngle = 270;
     /**
@@ -174,6 +174,7 @@ public class CircularSeekBar extends View {
 
             @Override
             public void onProgressChange(CircularSeekBar view, int newProgress) {
+                    Log.i("progress changed", "ANIMATION" +  newProgress );
 
             }
         };
@@ -319,6 +320,7 @@ public class CircularSeekBar extends View {
         canvas.drawArc(rect, startAngle, angle, false, innerColor);
         canvas.drawArc(rect1, startAngle, angle, false, innerColor);
         for (int i = 0; i < sb.size(); i++) {
+
             MultiCircularSeekbar item = sb.get(i);
             canvas.drawArc(item.rect, startAngle, angle, false, innerColor);
         }
@@ -348,7 +350,6 @@ public class CircularSeekBar extends View {
             canvas.drawBitmap(progressMarkPressed, dx, dy, null);
             for (int i = 0; i < sb.size(); i++) {
                 MultiCircularSeekbar item = sb.get(i);
-                Log.i("draw marker at progress", "DRAW" + i);
                 canvas.drawBitmap(progressMarkPressed, item.dx, item.dy, null);
 
             }
@@ -364,7 +365,6 @@ public class CircularSeekBar extends View {
 
         }
     }
-
 
     /**
      * Gets the X coordinate of the arc's end arm's point of intersection with
@@ -511,6 +511,7 @@ public class CircularSeekBar extends View {
                 int newAngle = (newPercent * 360) / 100;
                 this.setAngle(newAngle);
                 this.setProgressPercent(newPercent);
+
             }
             mListener.onProgressChange(this, this.getProgress());
             CALLED_FROM_ANGLE = false;
@@ -596,6 +597,8 @@ public class CircularSeekBar extends View {
      * @param up the up
      */
     private void moved(float x, float y, boolean up) {
+        Log.i("MOVED", x + " " + y);
+
         float distance = (float) Math.sqrt(Math.pow((x - cx), 2) + Math.pow((y - cy), 2));
         if (distance < outerRadius + adjustmentFactor && distance > innerRadius - adjustmentFactor && !up) {
             IS_PRESSED = true;
@@ -667,7 +670,7 @@ public class CircularSeekBar extends View {
      * the onSeekChange event occurs, that object's appropriate
      * method is invoked.
      *
-     * @see OnSeekChangeEvent
+     * @see  OnSeekChangeEvent
      */
     public interface OnSeekChangeListener {
 
