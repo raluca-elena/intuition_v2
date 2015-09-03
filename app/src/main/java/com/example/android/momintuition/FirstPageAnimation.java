@@ -31,6 +31,7 @@ import org.json.JSONObject;
 
 public class FirstPageAnimation extends ActionBarActivity {
     CircularSeekBar circularSeekbar;
+    static String[][] dataPop = new String[10][3];
 
 
     @Override
@@ -60,10 +61,52 @@ public class FirstPageAnimation extends ActionBarActivity {
         });*/
 
         addContentView(circularSeekbar, v.getLayoutParams());
-        CircularSeekBarAnimation anim = new CircularSeekBarAnimation(circularSeekbar, 0, 100);
+        final CircularSeekBarAnimation anim = new CircularSeekBarAnimation(circularSeekbar, 0, 100);
         anim.setDuration(7000);
         anim.setInterpolator(new MVAccelerateDecelerateInterpolator());
+        anim.setRepeatCount(3);
         circularSeekbar.startAnimation(anim);
+        //danger
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url ="http://52.11.50.74:9000";
+        //url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=food&key=AIzaSyBbE2wO2MDZ2goETgsY__ifEq2dlOMLLc4";
+        JsonObjectRequest stringRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, url,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //anim.cancel();
+                        // Display the first 500 characters of the response string.
+                        Log.i("THIS IS THE RESPONSE", response + "");
+                        try {
+                            FormatData d = new FormatData(response, dataPop);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("this is the error", error + "");
+            }
+        });
+        int  MY_SOCKET_TIMEOUT_MS = 1000;
+        Log.i("max retries", DefaultRetryPolicy.DEFAULT_MAX_RETRIES + "");
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_SOCKET_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+// Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
+
+
+
+        //danger
+
+
+
 
     }
 

@@ -8,7 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.PlacePhotoMetadataBuffer;
+import com.google.android.gms.location.places.PlacePhotoMetadataResult;
+import com.google.android.gms.location.places.Places;
+
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+    GoogleApiClient mGoogleApiClient;
     final View.OnClickListener optionListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -19,8 +25,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private String[][] mDataset = new String [4][2];
 
 
-    public MyAdapter(String[][] myDataset) {
+    public MyAdapter(String[][] myDataset, GoogleApiClient mGoogleApiClient) {
         mDataset = myDataset;
+        this.mGoogleApiClient = mGoogleApiClient;
         Log.i("BUBA" , myDataset.length + "");
     }
 
@@ -35,6 +42,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         if (position % 2 == 0) {
             holder.img.setCropToPadding(true);
             holder.img.setImageResource(R.drawable.bear);
+            //danger
+
+            //danger
+
+
 
         }
         holder.itemView.setOnClickListener(optionListener);

@@ -1,8 +1,11 @@
 package com.example.android.momintuition;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,12 +18,25 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.PlacePhotoMetadata;
+import com.google.android.gms.location.places.PlacePhotoMetadataBuffer;
+import com.google.android.gms.location.places.PlacePhotoMetadataResult;
+import com.google.android.gms.location.places.Places;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Random;
 
-public class ActivityChooser extends Activity {
+
+public class ActivityChooser extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 1;
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;//1 min/2
     static boolean canGetLocation = false;
@@ -31,6 +47,7 @@ public class ActivityChooser extends Activity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     static String[][] dataPop = new String[100][2];
+    private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +98,8 @@ public class ActivityChooser extends Activity {
                 Log.i("this is the error", error + "");
             }
         });
-        int  MY_SOCKET_TIMEOUT_MS = 100000;
-        Log.i("max retries", DefaultRetryPolicy.DEFAULT_MAX_RETRIES+"");
+        int  MY_SOCKET_TIMEOUT_MS = 1000;
+        Log.i("max retries", DefaultRetryPolicy.DEFAULT_MAX_RETRIES + "");
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(
                 MY_SOCKET_TIMEOUT_MS,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
@@ -94,8 +111,84 @@ public class ActivityChooser extends Activity {
 
         //DANGER
 
-        mAdapter = new MyAdapter(dataPop);
+
+        mGoogleApiClient = new GoogleApiClient
+                .Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+
+        mGoogleApiClient.connect();
+
+        AsyncTask as = new AsyncTask() {
+            @Override
+            protected Void doInBackground(Object... params) {
+
+                PlacePhotoMetadataResult result = Places.GeoDataApi
+                        .getPlacePhotos(mGoogleApiClient, "ChIJN1t_tDeuEmsRUsoyG83frY4").await();
+// Get a PhotoMetadataBuffer instance containing a list of photos (PhotoMetadata).
+                Log.i("the status is ", result.getStatus() + "");
+                //new BufferedWriter(new FileWriter(getExternalFilesDir() + "zuzu"));
+
+                if (result != null && result.getStatus().isSuccess()) {
+                    Log.i("I've got  photo", "photo");
+                    PlacePhotoMetadataBuffer photoMetadataBuffer = result.getPhotoMetadata();
+                    if (photoMetadataBuffer.getCount() > 0 && !isCancelled()) {
+                        // Get the first bitmap and its attributions.
+                        PlacePhotoMetadata photo = photoMetadataBuffer.get(0);
+                        CharSequence attribution = photo.getAttributions();
+                        // Load a scaled bitmap for this photo.
+                        Bitmap image = photo.getPhoto(mGoogleApiClient).await()
+                                .getBitmap();
+
+
+
+
+
+                        //danger
+                        if  (image != null)
+                            Log.i("GOT a true ", "BITMAP");
+                        String root = Environment.getExternalStorageDirectory().toString();
+                        File placesDir = new File(root + "/placessx");
+                        placesDir.mkdirs();
+                        Random generator = new Random();
+                        int n = 10000;
+                        n = generator.nextInt(n);
+                        String fname = "Image-" + n + ".jpg";
+                        File file = new File(placesDir, fname);
+                        Log.i("", "" + file);
+                       // if (file.exists())
+                       //     file.delete();
+                        try {
+                            FileOutputStream out = new FileOutputStream(file);
+                            image.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                            out.flush();
+                            out.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
+                        //danger
+
+
+
+                    }
+                    // Release the PlacePhotoMetadataBuffer.
+                    photoMetadataBuffer.release();
+                }
+
+                Log.i("this async is", "UNSUCCESS");
+
+                return null;}
+        };
+        as.execute();
+
+        mAdapter = new MyAdapter(dataPop, mGoogleApiClient);
         mRecyclerView.setAdapter(mAdapter);
+
 
 
 
@@ -103,6 +196,8 @@ public class ActivityChooser extends Activity {
 //TO INVESTIGATE
         FetchCoordinates fetchCordinates = new FetchCoordinates(getApplicationContext());
         fetchCordinates.execute();
+
+
 
     }
 
@@ -127,6 +222,25 @@ public class ActivityChooser extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Log.i("ON Connected", "photo");
+
+
+
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
     }
 
 /////
