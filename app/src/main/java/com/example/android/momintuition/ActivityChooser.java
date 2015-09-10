@@ -46,7 +46,7 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    static String[][] dataPop = new String[100][2];
+    static String[][] dataPop = new String[30][3];
     private GoogleApiClient mGoogleApiClient;
 
     @Override
@@ -112,7 +112,7 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
         //DANGER
 
 
-        mGoogleApiClient = new GoogleApiClient
+        /*mGoogleApiClient = new GoogleApiClient
                 .Builder(this)
                 .addApi(Places.GEO_DATA_API)
                 .addApi(Places.PLACE_DETECTION_API)
@@ -184,7 +184,7 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
 
                 return null;}
         };
-        as.execute();
+        as.execute();*/
 
         mAdapter = new MyAdapter(dataPop, mGoogleApiClient);
         mRecyclerView.setAdapter(mAdapter);

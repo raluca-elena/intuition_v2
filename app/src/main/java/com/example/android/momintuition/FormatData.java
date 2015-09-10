@@ -30,7 +30,8 @@ public class FormatData {
             mySet[j] = x.get("name") + "";
             dataPop[j][0] =  x.get("name") + "";
             dataPop[j][1] = x.get("types") + "";
-//            dataPop[j][2] = x.get("photos") + "";
+            dataPop[j][2] = x.get("place_id") + "";
+            Log.i("the place is is", dataPop[j][2]);
 
         }
 
