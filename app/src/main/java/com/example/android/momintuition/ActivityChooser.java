@@ -55,6 +55,16 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
         setContentView(R.layout.activity_activity_chooser);
 
 
+        mGoogleApiClient = new GoogleApiClient
+                .Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+
+        mGoogleApiClient.connect();
+
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 
         // use this setting to improve performance if you know that changes
@@ -66,15 +76,6 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-
-        // data set should come from AWS. next step to implement
-        //String[] myDataset = new String[4];
-        //myDataset[0] = "play";
-        //myDataset[1] = "eat";
-
-
-
-        //DANGER
         RequestQueue queue = Volley.newRequestQueue(this);
         String url ="http://52.11.50.74:9000";
         //url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=food&key=AIzaSyBbE2wO2MDZ2goETgsY__ifEq2dlOMLLc4";
@@ -104,100 +105,15 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
                 MY_SOCKET_TIMEOUT_MS,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-// Add the request to the RequestQueue.
         queue.add(stringRequest);
-
-
-
-        //DANGER
-
-
-        /*mGoogleApiClient = new GoogleApiClient
-                .Builder(this)
-                .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
-
-        mGoogleApiClient.connect();
-
-        AsyncTask as = new AsyncTask() {
-            @Override
-            protected Void doInBackground(Object... params) {
-
-                PlacePhotoMetadataResult result = Places.GeoDataApi
-                        .getPlacePhotos(mGoogleApiClient, "ChIJN1t_tDeuEmsRUsoyG83frY4").await();
-// Get a PhotoMetadataBuffer instance containing a list of photos (PhotoMetadata).
-                Log.i("the status is ", result.getStatus() + "");
-                //new BufferedWriter(new FileWriter(getExternalFilesDir() + "zuzu"));
-
-                if (result != null && result.getStatus().isSuccess()) {
-                    Log.i("I've got  photo", "photo");
-                    PlacePhotoMetadataBuffer photoMetadataBuffer = result.getPhotoMetadata();
-                    if (photoMetadataBuffer.getCount() > 0 && !isCancelled()) {
-                        // Get the first bitmap and its attributions.
-                        PlacePhotoMetadata photo = photoMetadataBuffer.get(0);
-                        CharSequence attribution = photo.getAttributions();
-                        // Load a scaled bitmap for this photo.
-                        Bitmap image = photo.getPhoto(mGoogleApiClient).await()
-                                .getBitmap();
-
-
-
-
-
-                        //danger
-                        if  (image != null)
-                            Log.i("GOT a true ", "BITMAP");
-                        String root = Environment.getExternalStorageDirectory().toString();
-                        File placesDir = new File(root + "/placessx");
-                        placesDir.mkdirs();
-                        Random generator = new Random();
-                        int n = 10000;
-                        n = generator.nextInt(n);
-                        String fname = "Image-" + n + ".jpg";
-                        File file = new File(placesDir, fname);
-                        Log.i("", "" + file);
-                       // if (file.exists())
-                       //     file.delete();
-                        try {
-                            FileOutputStream out = new FileOutputStream(file);
-                            image.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                            out.flush();
-                            out.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-
-                        //danger
-
-
-
-                    }
-                    // Release the PlacePhotoMetadataBuffer.
-                    photoMetadataBuffer.release();
-                }
-
-                Log.i("this async is", "UNSUCCESS");
-
-                return null;}
-        };
-        as.execute();*/
 
         mAdapter = new MyAdapter(dataPop, mGoogleApiClient);
         mRecyclerView.setAdapter(mAdapter);
 
 
-
-
-
-//TO INVESTIGATE
-        FetchCoordinates fetchCordinates = new FetchCoordinates(getApplicationContext());
-        fetchCordinates.execute();
-
-
+        //TO INVESTIGATE
+        //FetchCoordinates fetchCordinates = new FetchCoordinates(getApplicationContext());
+        //fetchCordinates.execute();
 
     }
 
@@ -227,10 +143,6 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
     @Override
     public void onConnected(Bundle bundle) {
         Log.i("ON Connected", "photo");
-
-
-
-
     }
 
     @Override
@@ -243,12 +155,8 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
 
     }
 
-/////
 
 }
-
-
-/////
 
 
 

@@ -18,7 +18,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     final View.OnClickListener optionListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-//String s = v.findViewById(R.id.title).toString();
             Log.i("this view was clicked", "GET THE ID ");
         }
     };
@@ -28,7 +27,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public MyAdapter(String[][] myDataset, GoogleApiClient mGoogleApiClient) {
         mDataset = myDataset;
         this.mGoogleApiClient = mGoogleApiClient;
-        Log.i("BUBA" , myDataset.length + "");
+        Log.i("DataSet Node Server" , myDataset.length + "");
     }
 
     @Override
@@ -39,18 +38,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.title.setText(mDataset[position][0]);
         holder.activity.setText(mDataset[position][1]);
 
+        Log.i("M_DATA   ",  mDataset[position][2] + "");
+        placePhotosTask(holder,mDataset[position][2]);
+
+
         if (position % 2 == 0) {
             holder.img.setCropToPadding(true);
             holder.img.setImageResource(R.drawable.bear);
-            //danger
-
-            //danger
-
-
 
         }
-        holder.itemView.setOnClickListener(optionListener);
 
+        holder.itemView.setOnClickListener(optionListener);
 
     }
 
@@ -71,17 +69,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         return mDataset.length;
     }
 
-
-    // Provide a suitable constructor (depends on the kind of dataset)
-
-
-    // Create new views (invoked by the layout manager)
-
-    // Replace the contents of a view (invoked by the layout manager)
-
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView title;
@@ -97,4 +84,31 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         }
     }
+
+    private void placePhotosTask(ViewHolder holder, String placeID){
+        final String placeId = placeID;
+        final ViewHolder h = holder;
+        // Create a new AsyncTask that displays the bitmap and attribution once loaded.
+        Log.i("h.img.getWidth()", h.img.getWidth()+ "");
+        Log.i( "h.img.getHeight()",  h.img.getHeight() + "");
+
+
+        new ImageTask(h.img.getWidth(), h.img.getHeight(),  mGoogleApiClient) {
+            @Override
+            protected void onPreExecute() {
+                // Display a temporary image to show while bitmap is loading.
+                h.img.setImageResource(R.drawable.bear);
+            }
+
+            @Override
+            protected void onPostExecute(AttributedPhoto attributedPhoto) {
+                if (attributedPhoto != null) {
+                    // Photo has been loaded, display it.
+                    h.img.setImageBitmap(attributedPhoto.bitmap);
+
+                }
+            }
+        }.execute(placeId);
+    }
+
 }
