@@ -1,6 +1,7 @@
 package com.example.android.momintuition;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.util.LruCache;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.PlacePhotoMetadata;
@@ -16,7 +17,6 @@ abstract class ImageTask extends AsyncTask<String , Void, ImageTask.AttributedPh
     private int mWidth;
     private String placeID;
     private GoogleApiClient mGoogleApiClient;
-
 
     public ImageTask(int width, int height, String PlaceID) {
         mHeight = height;
