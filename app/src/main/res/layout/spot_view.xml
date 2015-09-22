@@ -3,11 +3,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ActivityChooser">
-
-    <android.support.v7.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/my_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical" />
 </RelativeLayout>

@@ -21,13 +21,15 @@ public class FormatData {
 
         }
         JSONArray s = (JSONArray) data.get("results");
-        String[] mySet = new String[100];
-        for (int j = 0; j < s.length(); j++) {
+        int len = s.length();
+        //String[] mySet = new String[len];
+        Log.i("length of array", s.length() + "");
+        for (int j = 0; j < s.length()-1; j++) {
             Log.i("this are the results", s.get(j).toString());
             JSONObject x = (JSONObject) s.get(j);
             Log.i("this is so paifull", x.get("name") +"");
             Log.i("this is type", x.get("types") + "");
-            mySet[j] = x.get("name") + "";
+            //mySet[j] = x.get("name") + "";
             dataPop[j][0] =  x.get("name") + "";
             dataPop[j][1] = x.get("types") + "";
             dataPop[j][2] = x.get("place_id") + "";

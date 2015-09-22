@@ -31,7 +31,7 @@ import org.json.JSONObject;
 
 public class FirstPageAnimation extends ActionBarActivity {
     CircularSeekBar circularSeekbar;
-    static String[][] dataPop = new String[10][3];
+    static String[][] dataPop = new String[100][3];
 
 
     @Override

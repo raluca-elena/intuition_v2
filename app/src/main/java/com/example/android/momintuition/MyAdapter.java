@@ -125,9 +125,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 if (attributedPhoto != null) {
                     // Photo has been loaded, display it.
                     h.img.setImageBitmap(attributedPhoto.bitmap);
-                    synchronized (bitmapLruCache) {
+                    //synchronized (bitmapLruCache) {
                         bitmapLruCache.put(placeID, attributedPhoto.bitmap);
-                    }
+                        this.imageLoaded++;
+
+                    //}
                 }
             }
         }.execute(placeId);
