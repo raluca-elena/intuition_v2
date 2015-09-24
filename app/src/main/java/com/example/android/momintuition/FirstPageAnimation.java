@@ -3,9 +3,11 @@ package com.example.android.momintuition;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.util.LruCache;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,14 +26,19 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.appdatasearch.GetRecentContextCall;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.Places;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class FirstPageAnimation extends ActionBarActivity {
+public class FirstPageAnimation extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     CircularSeekBar circularSeekbar;
-    static String[][] dataPop = new String[100][3];
+    public static String[][] dataPop = new String[100][3];
+    public static LruCache<String, Bitmap> mMemoryCache = new LruCache<String, Bitmap>(20);
+    public static int bubu = 1000;
 
 
     @Override
@@ -62,11 +69,48 @@ public class FirstPageAnimation extends ActionBarActivity {
 
         addContentView(circularSeekbar, v.getLayoutParams());
         final CircularSeekBarAnimation anim = new CircularSeekBarAnimation(circularSeekbar, 0, 100);
-        anim.setDuration(7000);
+        anim.setDuration(3000);
         anim.setInterpolator(new MVAccelerateDecelerateInterpolator());
-        anim.setRepeatCount(3);
+        anim.setRepeatCount(2);
         circularSeekbar.startAnimation(anim);
-        //danger
+
+
+        anim.setAnimationListener(new Animation.AnimationListener() {
+
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                // TODO Start your activity here.
+                Intent intent = new Intent(getApplicationContext(), ActivityChooser.class);
+                startActivity(intent);
+
+                //startActivity(aboutIntent); // Here you go.
+
+            }
+        });
+
+        final GoogleApiClient mGoogleApiClient = new GoogleApiClient
+                .Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+
+        mGoogleApiClient.connect();
+
         RequestQueue queue = Volley.newRequestQueue(this);
         String url ="http://52.11.50.74:9000";
         //url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=food&key=AIzaSyBbE2wO2MDZ2goETgsY__ifEq2dlOMLLc4";
@@ -76,9 +120,36 @@ public class FirstPageAnimation extends ActionBarActivity {
                     public void onResponse(JSONObject response) {
                         //anim.cancel();
                         // Display the first 500 characters of the response string.
-                        Log.i("THIS IS THE RESPONSE", response + "");
+                        Log.i("THIS IS ANIM", response + "");
                         try {
                             FormatData d = new FormatData(response, dataPop);
+                            for (int i = 0; i < dataPop.length; i++){
+                                Log.i("id right now", dataPop[i][2] + "" );
+                                if (dataPop[i][2] != null){
+                                new ImageTask(120, 120,  mGoogleApiClient, dataPop[i][2]) {
+                                    @Override
+                                    protected void onPreExecute() {
+                                        // Display a temporary image to show while bitmap is loading.
+
+                                        //h.img.setImageResource(R.drawable.bear);
+                                        Log.i("on pre exec--", this.placeID + "");
+                                    }
+
+                                    @Override
+                                    protected void onPostExecute(AttributedPhoto attributedPhoto) {
+
+                                        if (attributedPhoto != null) {
+                                            // Photo has been loaded, display it.
+                                            //h.img.setImageBitmap(attributedPhoto.bitmap);
+                                            mMemoryCache.put(this.placeID, attributedPhoto.bitmap);
+                                            this.imageLoaded++;
+                                            Log.i("image loaded", this.imageLoaded + "");
+                                        }
+                                    }
+                                }.execute(dataPop[i][2]);} else break;}
+
+
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -97,16 +168,23 @@ public class FirstPageAnimation extends ActionBarActivity {
                 MY_SOCKET_TIMEOUT_MS,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-// Add the request to the RequestQueue.
+        // Add the request to the RequestQueue.
         queue.add(stringRequest);
 
+    }
 
+    @Override
+    public void onConnected(Bundle bundle) {
 
+    }
 
-        //danger
+    @Override
+    public void onConnectionSuspended(int i) {
 
+    }
 
-
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
 
     }
 

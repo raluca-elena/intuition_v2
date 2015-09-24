@@ -174,7 +174,7 @@ public class CircularSeekBar extends View {
 
             @Override
             public void onProgressChange(CircularSeekBar view, int newProgress) {
-                    Log.i("progress changed", "ANIMATION" +  newProgress );
+//                    Log.i("progress changed", "ANIMATION" +  newProgress );
 
             }
         };
@@ -597,7 +597,7 @@ public class CircularSeekBar extends View {
      * @param up the up
      */
     private void moved(float x, float y, boolean up) {
-        Log.i("MOVED", x + " " + y);
+       // Log.i("MOVED", x + " " + y);
 
         float distance = (float) Math.sqrt(Math.pow((x - cx), 2) + Math.pow((y - cy), 2));
         if (distance < outerRadius + adjustmentFactor && distance > innerRadius - adjustmentFactor && !up) {

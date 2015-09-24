@@ -26,11 +26,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             Log.i("this view was clicked", "GET THE ID ");
         }
     };
-    private String[][] mDataset = new String [4][2];
+//    private String[][] mDataset = new String [4][2];
+    private String[][] mDataset;
+
 
 
     public MyAdapter(String[][] myDataset, GoogleApiClient mGoogleApiClient,  LruCache<String, Bitmap> bitmapLruCache) {
         mDataset = myDataset;
+        Log.i("data", myDataset[2][1] + "");
         this.mGoogleApiClient = mGoogleApiClient;
         this.bitmapLruCache = bitmapLruCache;
         Log.i("DataSet Node Server" , myDataset.length + "");
@@ -49,25 +52,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 //        placePhotosTask(holder,mDataset[position][2]);
 
         if (mDataset[position][2] == null){
+            Log.i("get bear rolling", "BEAR in bind");
             holder.img.setImageResource(R.drawable.bear);}
         else if (bitmapLruCache.get(mDataset[position][2]) == null) {
-
-
-            holder.img.setCropToPadding(true);
             holder.img.setImageResource(R.drawable.bear);
             placePhotosTask(holder, mDataset[position][2]);
-
-
+            holder.img.setCropToPadding(true);
         } else {
-            Log.i("GOT IMG", mDataset[position][2]);
+            Log.i("GOT IMG in CACHE", mDataset[position][2]);
             Log.i("       ", "    ");
-
             holder.img.setImageBitmap(bitmapLruCache.get(mDataset[position][2]));
 
         }
-
         holder.itemView.setOnClickListener(optionListener);
-
     }
 
     @Override
@@ -109,7 +106,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // Create a new AsyncTask that displays the bitmap and attribution once loaded.
         //Log.i("h.img.getWidth()", h.img.getWidth()+ "");
         //Log.i( "h.img.getHeight()",  h.img.getHeight() + "");
-        Log.i("API CALL FOR ", placeID);
+        Log.i("NOT IN CACHE ", placeID);
 
 
         new ImageTask(h.img.getWidth(), h.img.getHeight(),  mGoogleApiClient) {
@@ -117,7 +114,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             protected void onPreExecute() {
                 // Display a temporary image to show while bitmap is loading.
 
-                h.img.setImageResource(R.drawable.bear);
+                //h.img.setImageResource(R.drawable.bear);
             }
 
             @Override
@@ -125,11 +122,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 if (attributedPhoto != null) {
                     // Photo has been loaded, display it.
                     h.img.setImageBitmap(attributedPhoto.bitmap);
-                    //synchronized (bitmapLruCache) {
-                        bitmapLruCache.put(placeID, attributedPhoto.bitmap);
-                        this.imageLoaded++;
-
-                    //}
+                    bitmapLruCache.put(placeID, attributedPhoto.bitmap);
+                    this.imageLoaded++;
                 }
             }
         }.execute(placeId);

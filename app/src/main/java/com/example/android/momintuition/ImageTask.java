@@ -15,22 +15,26 @@ abstract class ImageTask extends AsyncTask<String , Void, ImageTask.AttributedPh
 
     private int mHeight;
     private int mWidth;
-    private String placeID;
+    String placeID;
     private GoogleApiClient mGoogleApiClient;
     static int imageLoaded = 0;
 
-    public ImageTask(int width, int height, String PlaceID) {
-        mHeight = height;
-        mWidth = width;
-        placeID = PlaceID;
-        
-    }
 
     public ImageTask(int width, int height, GoogleApiClient g) {
         mGoogleApiClient = g;
         mHeight = height;
         mWidth = width;
     }
+
+
+
+    public ImageTask(int width, int height, GoogleApiClient g, String ID) {
+        placeID = ID;
+        mGoogleApiClient = g;
+        mHeight = height;
+        mWidth = width;
+    }
+
 
 
     @Override
