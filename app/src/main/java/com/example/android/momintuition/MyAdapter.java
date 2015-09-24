@@ -18,6 +18,7 @@ import com.google.android.gms.location.places.Places;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     GoogleApiClient mGoogleApiClient;
     LruCache<String, Bitmap> bitmapLruCache;
+    private String[][] mDataset;
 
 
     final View.OnClickListener optionListener = new View.OnClickListener() {
@@ -26,14 +27,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             Log.i("this view was clicked", "GET THE ID ");
         }
     };
-//    private String[][] mDataset = new String [4][2];
-    private String[][] mDataset;
 
 
 
     public MyAdapter(String[][] myDataset, GoogleApiClient mGoogleApiClient,  LruCache<String, Bitmap> bitmapLruCache) {
         mDataset = myDataset;
-        Log.i("data", myDataset[2][1] + "");
         this.mGoogleApiClient = mGoogleApiClient;
         this.bitmapLruCache = bitmapLruCache;
         Log.i("DataSet Node Server" , myDataset.length + "");
@@ -47,12 +45,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.title.setText(mDataset[position][0]);
         holder.activity.setText(mDataset[position][1]);
 
-        Log.i("M_DATA   ", mDataset[position][2] + "");
-        Log.i("       ", "    ");
-//        placePhotosTask(holder,mDataset[position][2]);
-
         if (mDataset[position][2] == null){
-            Log.i("get bear rolling", "BEAR in bind");
+            Log.i("get no entry rolling", "BEAR in bind");
             holder.img.setImageResource(R.drawable.bear);}
         else if (bitmapLruCache.get(mDataset[position][2]) == null) {
             holder.img.setImageResource(R.drawable.bear);
@@ -60,9 +54,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             holder.img.setCropToPadding(true);
         } else {
             Log.i("GOT IMG in CACHE", mDataset[position][2]);
-            Log.i("       ", "    ");
             holder.img.setImageBitmap(bitmapLruCache.get(mDataset[position][2]));
-
         }
         holder.itemView.setOnClickListener(optionListener);
     }
@@ -104,8 +96,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         final String placeId = placeID;
         final ViewHolder h = holder;
         // Create a new AsyncTask that displays the bitmap and attribution once loaded.
-        //Log.i("h.img.getWidth()", h.img.getWidth()+ "");
-        //Log.i( "h.img.getHeight()",  h.img.getHeight() + "");
         Log.i("NOT IN CACHE ", placeID);
 
 

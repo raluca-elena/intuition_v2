@@ -11,7 +11,6 @@ import org.json.JSONObject;
  */
 public class FormatData {
     JSONObject data;
-    //String[][] dataPop1 = new String[][3];
     FormatData(JSONObject jo, String[][] dataPop) throws JSONException {
         data = jo;
         System.out.print(data.toString());
@@ -27,11 +26,9 @@ public class FormatData {
         Log.i("length of array", s.length() + "");
         for (int j = 0; j < s.length()-1; j++) {
             JSONObject x = (JSONObject) s.get(j);
-            //mySet[j] = x.get("name") + "";
-            dataPop[j][0] =  x.get("name") + "";
+            dataPop[j][0] = x.get("name") + "";
             dataPop[j][1] = x.get("types") + "";
             dataPop[j][2] = x.get("place_id") + "";
-
         }
 
     }

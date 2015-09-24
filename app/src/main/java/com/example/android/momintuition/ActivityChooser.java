@@ -49,32 +49,11 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
     private RecyclerView.LayoutManager mLayoutManager;
     static String[][] dataPop = FirstPageAnimation.dataPop;
     private GoogleApiClient mGoogleApiClient;
-    //LruCache<String, Bitmap> mMemoryCache;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_chooser);
-        Log.i("THIS IS MY DATA", FirstPageAnimation.bubu + "");
-
-
-        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
-
-        // Use 1/8th of the available memory for this memory cache.
-        final int cacheSize = maxMemory / 8;
-
-        //cache for places
-        /*mMemoryCache = new LruCache<String, Bitmap>(cacheSize) {
-            @Override
-            protected int sizeOf(String key, Bitmap bitmap) {
-                // The cache size will be measured in kilobytes rather than
-                // number of items.
-                return bitmap.getByteCount() / 1024;
-            }
-        };*/
-
-
-
         mGoogleApiClient = new GoogleApiClient
                 .Builder(this)
                 .addApi(Places.GEO_DATA_API)
@@ -94,38 +73,6 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-        /*RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://52.11.50.74:9000";
-        //url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=food&key=AIzaSyBbE2wO2MDZ2goETgsY__ifEq2dlOMLLc4";
-        JsonObjectRequest stringRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, url,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // Display the first 500 characters of the response string.
-                        Log.i("THIS IS THE RESPONSE", response + "");
-                        try {
-                            FormatData d = new FormatData(response, dataPop);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i("this is the error", error + "");
-            }
-        });
-        int  MY_SOCKET_TIMEOUT_MS = 1000;
-        Log.i("max retries", DefaultRetryPolicy.DEFAULT_MAX_RETRIES + "");
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
-                MY_SOCKET_TIMEOUT_MS,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        queue.add(stringRequest);*/
-
         mAdapter = new MyAdapter(dataPop, mGoogleApiClient, FirstPageAnimation.mMemoryCache);
         mRecyclerView.setAdapter(mAdapter);
 

@@ -38,7 +38,6 @@ public class FirstPageAnimation extends ActionBarActivity implements GoogleApiCl
     CircularSeekBar circularSeekbar;
     public static String[][] dataPop = new String[100][3];
     public static LruCache<String, Bitmap> mMemoryCache = new LruCache<String, Bitmap>(20);
-    public static int bubu = 1000;
 
 
     @Override
@@ -51,21 +50,7 @@ public class FirstPageAnimation extends ActionBarActivity implements GoogleApiCl
         circularSeekbar.adjustRadius(6, 2);
         circularSeekbar.setMaxProgress(100);
         circularSeekbar.setProgress(0);
-
         circularSeekbar.setAngle(10);
-
-      /*  circularSeekbar.setSeekBarChangeListener(new CircularSeekBar.OnSeekChangeListener() {
-
-            @Override
-            public void onProgressChange(CircularSeekBar view, int newProgress) {
-
-                Log.i("progress so far", view.getProgress() + "");
-
-                //Log.i("progress", newProgress + "");
-                //circularSeekbar.setProgress(newProgress );
-
-            }
-        });*/
 
         addContentView(circularSeekbar, v.getLayoutParams());
         final CircularSeekBarAnimation anim = new CircularSeekBarAnimation(circularSeekbar, 0, 100);
@@ -140,7 +125,6 @@ public class FirstPageAnimation extends ActionBarActivity implements GoogleApiCl
 
                                         if (attributedPhoto != null) {
                                             // Photo has been loaded, display it.
-                                            //h.img.setImageBitmap(attributedPhoto.bitmap);
                                             mMemoryCache.put(this.placeID, attributedPhoto.bitmap);
                                             this.imageLoaded++;
                                             Log.i("image loaded", this.imageLoaded + "");
