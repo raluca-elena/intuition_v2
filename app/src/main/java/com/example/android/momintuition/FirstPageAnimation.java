@@ -56,7 +56,7 @@ public class FirstPageAnimation extends ActionBarActivity implements GoogleApiCl
         final CircularSeekBarAnimation anim = new CircularSeekBarAnimation(circularSeekbar, 0, 100);
         anim.setDuration(3000);
         anim.setInterpolator(new MVAccelerateDecelerateInterpolator());
-        anim.setRepeatCount(2);
+        anim.setRepeatCount(1);
         circularSeekbar.startAnimation(anim);
 
 
@@ -215,4 +215,9 @@ public class FirstPageAnimation extends ActionBarActivity implements GoogleApiCl
         return super.onOptionsItemSelected(item);
     }
     */
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }

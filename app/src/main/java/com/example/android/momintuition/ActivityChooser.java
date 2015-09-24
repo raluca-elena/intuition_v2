@@ -121,6 +121,11 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Log.i("BACK BLOCKED", "back block");
+    }
+
 
 }
 
