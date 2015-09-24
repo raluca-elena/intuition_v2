@@ -56,7 +56,7 @@
             android:label="@string/title_activity_activity_chooser" >
         </activity>
         <activity
-            android:name=".FirstPageAnimation"
+            android:name=".Anim"
             android:label="@string/title_activity_first_page_animation" >
 
             <intent-filter>

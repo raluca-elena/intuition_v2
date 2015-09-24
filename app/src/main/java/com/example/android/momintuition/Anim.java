@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.util.LruCache;
@@ -34,7 +37,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class FirstPageAnimation extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class Anim extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     CircularSeekBar circularSeekbar;
     public static String[][] dataPop = new String[100][3];
     public static LruCache<String, Bitmap> mMemoryCache = new LruCache<String, Bitmap>(20);
@@ -44,6 +47,12 @@ public class FirstPageAnimation extends ActionBarActivity implements GoogleApiCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_page_animation);
+        //findViewById(R.id.action_settings).getBackground().setAlpha(0);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //actionBar.setStackedBackgroundDrawable(new ColorDrawable(Color.parseColor("#550000ff")));;
+
+
         ViewGroup v = (ViewGroup) findViewById(R.id.abc);
 
         circularSeekbar = new CircularSeekBar(this);
@@ -60,23 +69,23 @@ public class FirstPageAnimation extends ActionBarActivity implements GoogleApiCl
         circularSeekbar.startAnimation(anim);
 
 
-        anim.setAnimationListener(new Animation.AnimationListener() {
+        anim.setAnimationListener(new android.view.animation.Animation.AnimationListener() {
 
 
             @Override
-            public void onAnimationStart(Animation animation) {
+            public void onAnimationStart(android.view.animation.Animation animation) {
                 // TODO Auto-generated method stub
 
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {
+            public void onAnimationRepeat(android.view.animation.Animation animation) {
                 // TODO Auto-generated method stub
 
             }
 
             @Override
-            public void onAnimationEnd(Animation animation) {
+            public void onAnimationEnd(android.view.animation.Animation animation) {
                 // TODO Start your activity here.
                 Intent intent = new Intent(getApplicationContext(), ActivityChooser.class);
                 startActivity(intent);
@@ -215,9 +224,4 @@ public class FirstPageAnimation extends ActionBarActivity implements GoogleApiCl
         return super.onOptionsItemSelected(item);
     }
     */
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 }

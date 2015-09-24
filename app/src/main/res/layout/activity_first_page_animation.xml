@@ -10,27 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:gravity="center_vertical|center_horizontal"
 
-    tools:context="com.example.android.momintuition.FirstPageAnimation">
+   >
 
-
-    <!--<com.example.android.momintuition.CircleButton
-    android:layout_width="164dip"
-    android:layout_height="164dip"
-        android:id="@+id/zuzu"
-    android:src="@drawable/ic_action_tick"
-    app:cb_color="#99CC00"
-    app:cb_pressedRingWidth="18dip"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />-->
-
-<!--
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:maxHeight="185dip"
-        android:minHeight="175dip"
-
-
-        android:indeterminate="true" />-->
 </RelativeLayout>

@@ -65,7 +65,7 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Log.i("BUTTON", "Animate");
                 Intent i;
-                i = new Intent(getApplicationContext(), FirstPageAnimation.class);
+                i = new Intent(getApplicationContext(), Anim.class);
                 startActivity(i);
 
             }

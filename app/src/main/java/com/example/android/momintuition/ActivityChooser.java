@@ -1,40 +1,17 @@
 package com.example.android.momintuition;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.LruCache;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.places.PlacePhotoMetadata;
-import com.google.android.gms.location.places.PlacePhotoMetadataBuffer;
-import com.google.android.gms.location.places.PlacePhotoMetadataResult;
 import com.google.android.gms.location.places.Places;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Random;
 
 
 public class ActivityChooser extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -47,7 +24,7 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    static String[][] dataPop = FirstPageAnimation.dataPop;
+    static String[][] dataPop = Anim.dataPop;
     private GoogleApiClient mGoogleApiClient;
 
     @Override
@@ -73,7 +50,7 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new MyAdapter(dataPop, mGoogleApiClient, FirstPageAnimation.mMemoryCache);
+        mAdapter = new MyAdapter(dataPop, mGoogleApiClient, Anim.mMemoryCache);
         mRecyclerView.setAdapter(mAdapter);
 
 
