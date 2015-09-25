@@ -1,5 +1,7 @@
 package com.example.android.momintuition;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,18 +21,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     GoogleApiClient mGoogleApiClient;
     LruCache<String, Bitmap> bitmapLruCache;
     private String[][] mDataset;
+    Context c;
 
 
     final View.OnClickListener optionListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Log.i("this view was clicked", "GET THE ID ");
+            Intent i = new Intent(c, MainActivity.class);
+            c.startActivity(i);
+            
         }
     };
 
 
 
-    public MyAdapter(String[][] myDataset, GoogleApiClient mGoogleApiClient,  LruCache<String, Bitmap> bitmapLruCache) {
+    public MyAdapter(Context c, String[][] myDataset, GoogleApiClient mGoogleApiClient,  LruCache<String, Bitmap> bitmapLruCache) {
+        this.c = c;
         mDataset = myDataset;
         this.mGoogleApiClient = mGoogleApiClient;
         this.bitmapLruCache = bitmapLruCache;

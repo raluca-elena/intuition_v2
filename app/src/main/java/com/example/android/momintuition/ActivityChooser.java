@@ -50,7 +50,7 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new MyAdapter(dataPop, mGoogleApiClient, Anim.mMemoryCache);
+        mAdapter = new MyAdapter(this, dataPop, mGoogleApiClient, Anim.mMemoryCache);
         mRecyclerView.setAdapter(mAdapter);
 
 
