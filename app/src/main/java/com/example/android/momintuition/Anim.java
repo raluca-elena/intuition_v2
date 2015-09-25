@@ -48,8 +48,9 @@ public class Anim extends ActionBarActivity implements GoogleApiClient.Connectio
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_page_animation);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        final ActionBar actionBar = getSupportActionBar();
+        //actionBar.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#40000000")));
 
 
         ViewGroup v = (ViewGroup) findViewById(R.id.abc);
@@ -88,6 +89,7 @@ public class Anim extends ActionBarActivity implements GoogleApiClient.Connectio
                 // TODO Start your activity here.
                 Intent intent = new Intent(getApplicationContext(), ActivityChooser.class);
                 startActivity(intent);
+                actionBar.hide();
 
                 //startActivity(aboutIntent); // Here you go.
 
