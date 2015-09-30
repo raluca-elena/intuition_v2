@@ -3,6 +3,7 @@ package com.example.android.momintuition;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.LruCache;
@@ -28,9 +29,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         @Override
         public void onClick(View v) {
             Log.i("this view was clicked", "GET THE ID ");
-            Intent i = new Intent(c, MainActivity.class);
-            c.startActivity(i);
-            
+            //Intent i = new Intent(c, MainActivity.class);
+            //c.startActivity(i);
+            Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                    Uri.parse("http://maps.google.com/maps?saddr=20.344,34.34&daddr=20.5666,45.345"));
+            c.startActivity(intent);
         }
     };
 
@@ -50,7 +53,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // - replace the contents of the view with that element
 
         holder.title.setText(mDataset[position][0]);
-        holder.activity.setText(mDataset[position][1]);
+//        holder.activity.setText(mDataset[position][1]);
 
         if (mDataset[position][2] == null){
             Log.i("get no entry rolling", "BEAR in bind");
@@ -93,7 +96,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             super(v);
 
             title = (TextView) v.findViewById(R.id.title);
-            activity = (TextView) v.findViewById(R.id.activity);
+            //activity = (TextView) v.findViewById(R.id.activity);
             img = (ImageView) v.findViewById(R.id.image);
 
         }

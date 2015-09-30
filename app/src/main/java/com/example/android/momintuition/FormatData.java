@@ -29,6 +29,9 @@ public class FormatData {
             dataPop[j][0] = x.get("name") + "";
             dataPop[j][1] = x.get("types") + "";
             dataPop[j][2] = x.get("place_id") + "";
+            dataPop[j][3] = ((JSONObject)(((JSONObject) x.get("geometry")).get("location"))).get("lat")+","+
+                            ((JSONObject)(((JSONObject) x.get("geometry")).get("location"))).get("lng")+"";
+            Log.i("LAT LONG", dataPop[j][3]+"");
         }
 
     }

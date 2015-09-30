@@ -40,7 +40,9 @@ import org.json.JSONObject;
 
 public class Anim extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     CircularSeekBar circularSeekbar;
-    public static String[][] dataPop = new String[100][3];
+    public static String[][] dataPop = new String[100][4];
+    public static String[][] places = new String[100][2];
+
     public static LruCache<String, Bitmap> mMemoryCache = new LruCache<String, Bitmap>(20);
 
 
@@ -65,7 +67,7 @@ public class Anim extends ActionBarActivity implements GoogleApiClient.Connectio
         final CircularSeekBarAnimation anim = new CircularSeekBarAnimation(circularSeekbar, 0, 100);
         anim.setDuration(3000);
         anim.setInterpolator(new MVAccelerateDecelerateInterpolator());
-        anim.setRepeatCount(1);
+        anim.setRepeatCount(2);
         circularSeekbar.startAnimation(anim);
 
 
@@ -118,6 +120,8 @@ public class Anim extends ActionBarActivity implements GoogleApiClient.Connectio
                         Log.i("THIS IS ANIM", response + "");
                         try {
                             FormatData d = new FormatData(response, dataPop);
+                            DistanceMatrixTask dmatrix = new DistanceMatrixTask(getApplicationContext(),dataPop);
+
                             for (int i = 0; i < dataPop.length; i++){
                                 Log.i("id right now", dataPop[i][2] + "" );
                                 if (dataPop[i][2] != null){
@@ -140,7 +144,10 @@ public class Anim extends ActionBarActivity implements GoogleApiClient.Connectio
                                             Log.i("image loaded", this.imageLoaded + "");
                                         }
                                     }
-                                }.execute(dataPop[i][2]);} else break;}
+                                }.execute(dataPop[i][2]);
+
+
+                                } else break;}
 
 
 
@@ -156,7 +163,7 @@ public class Anim extends ActionBarActivity implements GoogleApiClient.Connectio
                 Log.i("this is the error", error + "");
             }
         });
-        int  MY_SOCKET_TIMEOUT_MS = 1000;
+        int  MY_SOCKET_TIMEOUT_MS = 9000;
         Log.i("max retries", DefaultRetryPolicy.DEFAULT_MAX_RETRIES + "");
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(
                 MY_SOCKET_TIMEOUT_MS,
