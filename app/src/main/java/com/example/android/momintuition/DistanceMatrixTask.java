@@ -35,7 +35,6 @@ public class DistanceMatrixTask{
     String homecoord = "37.4031455,-122.0753819";
     //url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=food&key=AIzaSyBbE2wO2MDZ2goETgsY__ifEq2dlOMLLc4";
 
-
     void request(String coords){
         String uri = url + homecoord+  "&destinations=" + coords + "&sensor=false&key=AIzaSyDISYkoIYzQesb1VQ0eQQ6x0BaWxD87xWg";
         JsonObjectRequest stringRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, uri,

@@ -3,12 +3,15 @@ package com.example.android.momintuition;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.LruCache;
 import android.view.Menu;
@@ -38,7 +41,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class Anim extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class Anim extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     CircularSeekBar circularSeekbar;
     public static String[][] dataPop = new String[100][4];
     public static String[][] places = new String[100][2];
@@ -46,8 +49,29 @@ public class Anim extends ActionBarActivity implements GoogleApiClient.Connectio
     public static LruCache<String, Bitmap> mMemoryCache = new LruCache<String, Bitmap>(20);
 
 
+
+    public  String getThemeName()
+    {
+        PackageInfo packageInfo;
+        try
+        {
+            packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA);
+            int themeResId = packageInfo.applicationInfo.theme;
+            return getResources().getResourceEntryName(themeResId);
+        }
+        catch (PackageManager.NameNotFoundException e)
+        {
+            return null;
+        }
+    }
+    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+        Log.i("BLA", getThemeName() + "");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_page_animation);
         final ActionBar actionBar = getSupportActionBar();

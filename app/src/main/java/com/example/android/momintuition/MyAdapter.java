@@ -25,14 +25,46 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     Context c;
 
 
+
+    ////
+    public class MyOnClickListener implements View.OnClickListener
+    {
+
+        String coord;
+        String type;
+        public MyOnClickListener(String coord, String type) {
+            this.coord = coord;
+            this.type = type;
+
+            Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                    Uri.parse("http://maps.google.com/maps?saddr=20.344,34.34&daddr=20.5666,45.345"));
+            c.startActivity(intent);
+
+
+
+        }
+
+        @Override
+        public void onClick(View v)
+        {
+            //read your lovely variable
+        }
+
+    };
+
+
+
+    ////
     final View.OnClickListener optionListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Log.i("this view was clicked", "GET THE ID ");
-            //Intent i = new Intent(c, MainActivity.class);
+            Intent intent = new Intent(c, DirectionsActivity.class);
             //c.startActivity(i);
-            Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                    Uri.parse("http://maps.google.com/maps?saddr=20.344,34.34&daddr=20.5666,45.345"));
+            // get teh parsed locations coord
+
+           // Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+           //         Uri.parse("http://maps.google.com/maps?saddr=20.344,34.34&daddr=20.5666,45.345"));
             c.startActivity(intent);
         }
     };
@@ -53,6 +85,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // - replace the contents of the view with that element
 
         holder.title.setText(mDataset[position][0]);
+
+
 //        holder.activity.setText(mDataset[position][1]);
 
         if (mDataset[position][2] == null){
@@ -66,7 +100,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             Log.i("GOT IMG in CACHE", mDataset[position][2]);
             holder.img.setImageBitmap(bitmapLruCache.get(mDataset[position][2]));
         }
-        holder.itemView.setOnClickListener(optionListener);
+        //holder.itemView.setOnClickListener(optionListener);
+        holder.itemView.findViewById(R.id.car).setOnClickListener(optionListener);
     }
 
     @Override

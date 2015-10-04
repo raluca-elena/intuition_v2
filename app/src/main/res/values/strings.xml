@@ -7,4 +7,5 @@
     <string name="user">john.dow@mymail.com</string>
     <string name="title_activity_activity_chooser">ActivityChooser</string>
     <string name="title_activity_first_page_animation">SearchingPlayLocations...</string>
+    <string name="title_activity_directions">DirectionsActivity</string>
 </resources>
