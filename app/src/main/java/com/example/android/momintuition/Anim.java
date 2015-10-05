@@ -200,16 +200,17 @@ public class Anim extends AppCompatActivity implements GoogleApiClient.Connectio
 
     @Override
     public void onConnected(Bundle bundle) {
-
+        Log.i("I am connected", "maps");
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-
+        Log.i("conn suspended", " " + i);
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.i("onConnFailed", connectionResult + " ");
 
     }
 

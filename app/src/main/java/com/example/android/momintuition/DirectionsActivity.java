@@ -29,18 +29,19 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
         setContentView(R.layout.activity_directions);
         MapView mv = (MapView) findViewById(R.id.mapView);
         mv.onCreate(savedInstanceState);
-        //mv.getMapAsync();
-        mMap = mv.getMap();
+        mv.getMapAsync(this);
+        //mMap = mv.getMap();
 
         MapsInitializer.initialize(this);
         //mMap.setMyLocationEnabled(true);
-        LatLng mapCenter = new LatLng(41.889, -87.622);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mapCenter, 13));
 
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        LatLng mapCenter = new LatLng(41.889, -87.622);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mapCenter, 13));
 
     }
 }
