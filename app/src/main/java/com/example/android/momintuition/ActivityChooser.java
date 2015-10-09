@@ -1,6 +1,7 @@
 package com.example.android.momintuition;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +31,10 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent i = new Intent(this, GMapListener.class);
+        startService(i);
+
         setContentView(R.layout.activity_activity_chooser);
         mGoogleApiClient = new GoogleApiClient
                 .Builder(this)

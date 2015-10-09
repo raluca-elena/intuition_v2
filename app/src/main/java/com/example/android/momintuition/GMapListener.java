@@ -6,10 +6,12 @@ package com.example.android.momintuition;
 
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
+import android.app.Notification;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
@@ -69,6 +71,29 @@ public class GMapListener extends AccessibilityService{
                 "onAccessibilityEvent: [type] %s [class] %s [package] %s [time] %s [text] %s",
                 getEventType(event), event.getClassName(), event.getPackageName(),
                 event.getEventTime(), getEventText(event)));
+
+
+        if (event.getEventType() == AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED) {
+            Log.d("TORTUGA","Recieved event");
+            Parcelable data = event.getParcelableData();
+            if (data instanceof Notification) {
+                Log.i("Tortuga","Recieved notification");
+                Notification notification = (Notification) data;
+                Log.i("Tortuga","ticker: " + notification.tickerText);
+                Log.i("Tortuga","icon: " + notification.icon);
+                Log.i("Tortuga", "notification: "+ event.getText());
+            }
+
+            if (getEventType(event) == "default"){
+                Log.i("IACA", "EVRICA");
+                Parcelable data1 = event.getParcelableData();
+                Log.i("DATA1", data1+"");
+
+
+
+
+            }
+        }
     }
 
     @Override
@@ -76,22 +101,28 @@ public class GMapListener extends AccessibilityService{
         Log.v(TAG, "onInterrupt");
     }
 
-    @Override
+    /*@Override
     protected void onServiceConnected() {
         super.onServiceConnected();
-        Log.i(TAG, "onServiceConnected");
-        AccessibilityServiceInfo info = new AccessibilityServiceInfo();
-        info.flags = AccessibilityServiceInfo.DEFAULT;
-        info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK;
+        Log.i("TORTUGA", "onServiceConnected" + " " + getServiceInfo());
 
-        info.packageNames = new String[]
-                { "com.google.android.talk", "com.google.android.apps.maps", };
+        AccessibilityServiceInfo info = new AccessibilityServiceInfo();
+        //info.flags = AccessibilityServiceInfo.DEFAULT;
+        info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK;
+        info.feedbackType = AccessibilityServiceInfo.DEFAULT;
+
+
+        //info.eventTypes = AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED;
+        //info.feedbackType = AccessibilityServiceInfo.FEEDBACK_ALL_MASK;
+
+        //info.packageNames = new String[]
+        //        { "com.google.android.talk", "com.google.android.apps.maps", };
 
         //info.eventTypes = AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED;
 
-        info.feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC;
+        //info.feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC;
         setServiceInfo(info);
-    }
+    }*/
 /*
     @Override
         public void onAccessibilityEvent(AccessibilityEvent event) {
