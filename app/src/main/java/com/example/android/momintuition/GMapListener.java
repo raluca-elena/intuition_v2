@@ -64,7 +64,8 @@ public class GMapListener extends AccessibilityService{
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        Log.v(TAG, String.format(
+        Log.i("GOT AN EVENT", event+"");
+        Log.i("EVENT", String.format(
                 "onAccessibilityEvent: [type] %s [class] %s [package] %s [time] %s [text] %s",
                 getEventType(event), event.getClassName(), event.getPackageName(),
                 event.getEventTime(), getEventText(event)));
@@ -82,6 +83,12 @@ public class GMapListener extends AccessibilityService{
         AccessibilityServiceInfo info = new AccessibilityServiceInfo();
         info.flags = AccessibilityServiceInfo.DEFAULT;
         info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK;
+
+        info.packageNames = new String[]
+                { "com.google.android.talk", "com.google.android.apps.maps", };
+
+        //info.eventTypes = AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED;
+
         info.feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC;
         setServiceInfo(info);
     }
@@ -135,7 +142,7 @@ public class GMapListener extends AccessibilityService{
                     AccessibilityEvent.TYPE_VIEW_FOCUSED;
 
             info.packageNames = new String[]
-                    { "com.google.android.talk", "com.google.android.apps.babel"};
+                    { "com.google.android.talk", "com.google.android.apps.maps", };
 
             Log.i("my info", info.toString() + "");
 
