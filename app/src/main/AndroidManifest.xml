@@ -26,6 +26,9 @@
     <permission
         android:name="com.example.permission.MAPS_RECEIVE"
         android:protectionLevel="signature"/>
+
+
+
     <uses-permission android:name="com.example.permission.MAPS_RECEIVE"/>
 
 
@@ -74,6 +77,16 @@
             android:name=".DirectionsActivity"
             android:label="@string/title_activity_directions" >
         </activity>
+
+        <service android:name="com.example.android.momintuition.GMapListener"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+        </service>
+
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.example.android.momintuition;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -33,15 +34,8 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Document;
-
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 public class DirectionsActivity extends AppCompatActivity implements OnMapReadyCallback {
     MapView mapView;
@@ -55,6 +49,8 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
         mapView.getMapAsync(this);
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#40000000")));
+        Intent i = new Intent(this, GMapListener.class);
+        startService(i);
 
     }
 
@@ -75,9 +71,10 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
                     }} , new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Log.i("this is the error", error + "");}
-                     });
-        int  MY_SOCKET_TIMEOUT_MS = 9000;
+                            Log.i("this is the error", error + "");
+                        }
+        });
+        int MY_SOCKET_TIMEOUT_MS = 9000;
         Log.i("max retries", DefaultRetryPolicy.DEFAULT_MAX_RETRIES + "");
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(
                 MY_SOCKET_TIMEOUT_MS,
@@ -123,9 +120,7 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
                         .geodesic(true)
         );
 
-
     }
-
 
     @Override
     public void onResume() {
@@ -186,7 +181,5 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
 
         return poly;
     }
-
-
 
 }
