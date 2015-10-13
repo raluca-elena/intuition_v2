@@ -1,13 +1,16 @@
 package com.example.android.momintuition;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -37,7 +40,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DirectionsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class DirectionsActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
     MapView mapView;
     GoogleMap map;
     @Override
@@ -55,6 +58,7 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
         //DANGER
         Intent i = new Intent(this, GMapListener.class);
         startService(i);
+        findViewById(R.id.arrow).setOnClickListener(this);
 
     }
 
@@ -133,7 +137,7 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
         super.onResume();
     }
 
-    @Override
+            @Override
     public void onPause() {
         super.onPause();
         mapView.onPause();
@@ -186,4 +190,17 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
         return poly;
     }
 
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                Uri.parse("http://maps.google.com/maps?saddr=45.7062727,27.1826593&daddr=45.7066196,27.1826913"));
+        startActivityForResult(intent, 0);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i("ON ACTIVITY", " Request code " + requestCode);
+        Log.i("ON ACTIVITY", "result code " + resultCode);
+    }
 }
