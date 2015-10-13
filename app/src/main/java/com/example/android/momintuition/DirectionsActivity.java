@@ -43,6 +43,7 @@ import java.util.List;
 public class DirectionsActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
     MapView mapView;
     GoogleMap map;
+    static boolean crapyFlag = false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -195,6 +196,8 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                 Uri.parse("http://maps.google.com/maps?saddr=45.7062727,27.1826593&daddr=45.7066196,27.1826913"));
         startActivityForResult(intent, 0);
+        crapyFlag = true;
+
     }
 
     @Override
@@ -202,5 +205,9 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
         super.onActivityResult(requestCode, resultCode, data);
         Log.i("ON ACTIVITY", " Request code " + requestCode);
         Log.i("ON ACTIVITY", "result code " + resultCode);
+        if (crapyFlag){
+        Intent intent = new Intent(getApplicationContext(), ActivityChooser.class);
+        startActivity(intent);
+        }
     }
 }
