@@ -49,6 +49,10 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
         mapView.getMapAsync(this);
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#40000000")));
+        //DANGER
+        Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
+        startActivityForResult(intent, 0);
+        //DANGER
         Intent i = new Intent(this, GMapListener.class);
         startService(i);
 

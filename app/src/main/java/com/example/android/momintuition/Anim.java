@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -69,13 +70,9 @@ public class Anim extends AppCompatActivity implements GoogleApiClient.Connectio
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
-        Log.i("BLA", getThemeName() + "");
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_page_animation);
         final ActionBar actionBar = getSupportActionBar();
-        //actionBar.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#40000000")));
 
 
