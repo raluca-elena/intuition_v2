@@ -110,6 +110,15 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
+
+        //danger
+        //getWindow().getDecorView().invalidate();
+        //getWindow().getDecorView().setVisibility(View.GONE);
+        //
+
+
+
         this.map = googleMap;
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(43.65331,-79.38277), 5);
         map.animateCamera(cameraUpdate);

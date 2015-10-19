@@ -2,6 +2,8 @@ package com.example.android.momintuition;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -36,6 +39,11 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
         startService(i);
 
         setContentView(R.layout.activity_activity_chooser);
+
+        //DANGER
+        getWindow().setBackgroundDrawable(new ColorDrawable(0));
+
+        //DANGER
         mGoogleApiClient = new GoogleApiClient
                 .Builder(this)
                 .addApi(Places.GEO_DATA_API)
@@ -106,6 +114,18 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
     @Override
     public void onBackPressed() {
         Log.i("BACK BLOCKED", "back block");
+    }
+
+
+    //DANGER
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        Log.i("onSTOP", "I stopped activityCHooser?");
+//        getWindow().getDecorView().invalidate();
+//        getWindow().getDecorView().setVisibility(View.GONE);
+
     }
 
 

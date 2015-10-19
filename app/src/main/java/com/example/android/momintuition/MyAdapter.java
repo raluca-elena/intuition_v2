@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -59,6 +60,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         @Override
         public void onClick(View v) {
             Log.i("this view was clicked", "GET THE ID ");
+            //getWindow().getDecorView().invalidate();
+
             Intent intent = new Intent(c, DirectionsActivity.class);
             //c.startActivity(i);
             // get teh parsed locations coord
@@ -107,6 +110,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
+
+
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.spot, parent, false);
