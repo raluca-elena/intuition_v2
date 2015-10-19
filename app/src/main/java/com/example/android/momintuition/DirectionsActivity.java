@@ -1,12 +1,10 @@
 package com.example.android.momintuition;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,8 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
@@ -23,17 +19,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -61,31 +52,23 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
         AccessibilityManager accessibilityManager =
                 (AccessibilityManager) getApplicationContext().getSystemService(Context.ACCESSIBILITY_SERVICE);
 
-        logInstalledAccessiblityServices(getApplicationContext());
+        logInstalledandEnabledAccessiblityServices(getApplicationContext());
         if (!isAccessibilityEnabled(getApplicationContext(), "com.example.android.momtuition/com.example.android.momintuition.GMapListener")) {
 
             //ask for accessibility permissions
-
-            Log.i("----Accesibility", accessibilityManager.isEnabled() + "");
+            Log.i("---ACCESS IS", accessibilityManager.isEnabled() + "");
             Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
             startActivityForResult(intent, 0);
         } else {
-            Log.i("---My accesibility is ", accessibilityManager.isEnabled() + "");
+            Log.i("---ACCES IS ENABLED", accessibilityManager.isEnabled() + "");
         }
-        //start service listening to notifications
-
-            //Intent i = new Intent(this, GMapListener.class);
-            //startService(i);
 
         findViewById(R.id.arrow).setOnClickListener(this);
 
     }
 
 
-
-
-
-    public static void logInstalledAccessiblityServices(Context context) {
+    public static void logInstalledandEnabledAccessiblityServices(Context context) {
 
         AccessibilityManager am = (AccessibilityManager) context
                 .getSystemService(Context.ACCESSIBILITY_SERVICE);
@@ -93,24 +76,17 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
         List<AccessibilityServiceInfo> runningServices = am
                 .getInstalledAccessibilityServiceList();
         for (AccessibilityServiceInfo service : runningServices) {
-            Log.i("ACCESIBILITY SERVICE", service.getId());
-            //String s = service.getSettingsActivityName();
-            //Log.i("ACCESIBILITY SERVICE NAME", s);
-
-
-
+            Log.i("ACCES SERVICE RUNNING", service.getId());
 
         }
 
         List<AccessibilityServiceInfo> enabledServices = am
                 .getEnabledAccessibilityServiceList(AccessibilityEvent.TYPES_ALL_MASK);
         for (AccessibilityServiceInfo service : enabledServices) {
-            Log.i("SERVICE ENABLED", service.getId());
-            }
+            Log.i("ACCES SERVICE ENABLED", service.getId());
         }
+    }
 
-
-    //com.example.android.momtuition/com.example.android.momintuition.GMapListener
 
     public static boolean isAccessibilityEnabled(Context context, String id) {
 
@@ -274,9 +250,10 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
         super.onActivityResult(requestCode, resultCode, data);
         Log.i("ON ACTIVITY", " Request code " + requestCode);
         Log.i("ON ACTIVITY", "result code " + resultCode);
-        if (crapyFlag){
-        Intent intent = new Intent(getApplicationContext(), ActivityChooser.class);
-        startActivity(intent);
+        if (crapyFlag) {
+            Intent intent = new Intent(getApplicationContext(), ActivityChooser.class);
+            startActivity(intent);
+            crapyFlag = false;
         }
     }
 }
