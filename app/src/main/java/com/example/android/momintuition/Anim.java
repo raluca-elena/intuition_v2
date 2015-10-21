@@ -73,8 +73,10 @@ public class Anim extends AppCompatActivity implements GoogleApiClient.Connectio
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_page_animation);
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#40000000")));
 
+        //danger
+        //actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#40000000")));
+//
 
         ViewGroup v = (ViewGroup) findViewById(R.id.abc);
 

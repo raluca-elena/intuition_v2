@@ -1,7 +1,19 @@
 <!-- res/values/styles.xml -->
 <resources>
     <!-- your theme inherits from the material theme -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Translucent">
         <!-- theme customizations -->
+        <item name="android:actionBarStyle">@style/MyActionBarTheme</item>
+
+
+
+
+    </style>
+
+
+    <style name="MyActionBarTheme" parent="@style/Theme.AppCompat.Translucent">
+
+        <item name="android:background">#40000000</item>
+
     </style>
 </resources>

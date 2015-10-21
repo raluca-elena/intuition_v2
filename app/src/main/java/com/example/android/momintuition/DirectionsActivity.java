@@ -54,9 +54,6 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
 
         logInstalledandEnabledAccessiblityServices(getApplicationContext());
         if (!isAccessibilityEnabled(getApplicationContext(), "com.example.android.momtuition/com.example.android.momintuition.GMapListener")) {
-
-            //ask for accessibility permissions
-            Log.i("---ACCESS IS", accessibilityManager.isEnabled() + "");
             Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
             startActivityForResult(intent, 0);
         } else {
@@ -105,19 +102,8 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
     }
 
 
-
-
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
-
-        //danger
-        //getWindow().getDecorView().invalidate();
-        //getWindow().getDecorView().setVisibility(View.GONE);
-        //
-
-
 
         this.map = googleMap;
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(43.65331,-79.38277), 5);
