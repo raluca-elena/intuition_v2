@@ -261,6 +261,7 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
         Log.i("ON ACTIVITY", "result code " + resultCode);
         if (crapyFlag) {
             Intent intent = new Intent(getApplicationContext(), ActivityChooser.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             crapyFlag = false;
         }

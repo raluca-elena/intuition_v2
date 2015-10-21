@@ -117,18 +117,6 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
     }
 
 
-    //DANGER
-
-    @Override
-    public void onStop(){
-        super.onStop();
-        Log.i("onSTOP", "I stopped activityCHooser?");
-//        getWindow().getDecorView().invalidate();
-//        getWindow().getDecorView().setVisibility(View.GONE);
-
-    }
-
-
 }
 
 
