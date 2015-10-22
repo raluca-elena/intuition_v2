@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.momintuition"
-    android:screenOrientation="portrait">
+    package="com.example.android.momintuition">
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -54,19 +53,15 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".SignIn"
-            android:label="@string/title_activity_sign_in" >
-        </activity>
-        <activity
-            android:name=".SignUp"
-            android:label="@string/title_activity_sign_up" >
-        </activity>
-        <activity
             android:name=".ActivityChooser"
-            android:label="@string/title_activity_activity_chooser" >
+            android:label="@string/title_activity_activity_chooser"
+            android:screenOrientation="portrait">
+            >
         </activity>
         <activity
             android:name=".Anim"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_first_page_animation" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

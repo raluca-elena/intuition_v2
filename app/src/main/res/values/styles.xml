@@ -3,17 +3,15 @@
     <!-- your theme inherits from the material theme -->
     <style name="AppTheme" parent="@style/Theme.AppCompat.Translucent">
         <!-- theme customizations -->
-        <item name="android:actionBarStyle">@style/MyActionBarTheme</item>
-
-
-
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
 
     </style>
 
 
-    <style name="MyActionBarTheme" parent="@style/Theme.AppCompat.Translucent">
-
+    <style name="MyActionBar" parent="@style/Theme.AppCompat.Translucent">
         <item name="android:background">#40000000</item>
+        <item name="android:textColor">#E5ED0E</item>
 
     </style>
+
 </resources>
