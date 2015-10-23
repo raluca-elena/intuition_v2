@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
@@ -42,12 +43,12 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_directions);
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
         mapView = (MapView) findViewById(R.id.mapview);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#40000000")));
-
 
         AccessibilityManager accessibilityManager =
                 (AccessibilityManager) getApplicationContext().getSystemService(Context.ACCESSIBILITY_SERVICE);
@@ -131,6 +132,8 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
+
+
 
     }
 

@@ -23,7 +23,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
-
+import android.support.v7.widget.Toolbar;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -71,7 +71,12 @@ public class Anim extends AppCompatActivity implements GoogleApiClient.Connectio
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_page_animation);
-        final ActionBar actionBar = getSupportActionBar();
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+
+        //final ActionBar actionBar = getSupportActionBar();
         Log.i("THEME ", getThemeName() + "");
 
         //danger
@@ -114,8 +119,8 @@ public class Anim extends AppCompatActivity implements GoogleApiClient.Connectio
                 // TODO Start your activity here.
                 Intent intent = new Intent(getApplicationContext(), ActivityChooser.class);
                 startActivity(intent);
-                actionBar.hide();
-
+                //actionBar.hide();
+toolbar.setVisibility(View.GONE);
                 //startActivity(aboutIntent); // Here you go.
 
             }
