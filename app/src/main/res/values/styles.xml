@@ -1,17 +1,26 @@
 <!-- res/values/styles.xml -->
 <resources>
     <!-- your theme inherits from the material theme -->
-    <style name="AppTheme" parent="@style/Theme.AppCompat.Translucent">
-        <!-- theme customizations -->
-        <item name="android:actionBarStyle">@style/MyActionBar</item>
 
+    <style name="Theme.AppCompat.Translucent">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+
+        <item name="windowActionBarOverlay">true</item> <!-- for ActionBarSherlock -->
+        <item name="android:windowActionBarOverlay">true</item>
+
+        <item name="android:actionBarStyle">@style/ActionBarTheme</item>
     </style>
 
 
-    <style name="MyActionBar" parent="@style/Theme.AppCompat.Translucent">
-        <item name="android:background">#40000000</item>
-        <item name="android:textColor">#E5ED0E</item>
-
+    <style name="ActionBarTheme" parent="android:Widget.ActionBar">
+        <item name="android:background">#FFFF0000</item>
     </style>
+
+
+    <style name="ActionBarTheme123" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
 
 </resources>

@@ -11,7 +11,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.LruCache;
@@ -73,6 +72,7 @@ public class Anim extends AppCompatActivity implements GoogleApiClient.Connectio
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_page_animation);
         final ActionBar actionBar = getSupportActionBar();
+        Log.i("THEME ", getThemeName() + "");
 
         //danger
         //actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#40000000")));
