@@ -1,38 +1,18 @@
 package com.example.android.momintuition;
 
-import android.app.Activity;
-import android.app.DownloadManager;
-import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
+import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.LruCache;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.Interpolator;
-import android.support.v7.widget.Toolbar;
+
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.appdatasearch.GetRecentContextCall;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
@@ -40,68 +20,23 @@ import com.google.android.gms.location.places.Places;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Created by rpodiuc on 10/24/15.
+ */
+public class LocalisationNearbyPlaces implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
-public class Anim extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-    CircularSeekBar circularSeekbar;
+    Context context;
     public static String[][] dataPop = new String[100][4];
-    public static String[][] places = new String[100][2];
-
     public static LruCache<String, Bitmap> mMemoryCache = new LruCache<String, Bitmap>(20);
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first_page_animation);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ViewGroup v = (ViewGroup) findViewById(R.id.layout);
-
-        circularSeekbar = new CircularSeekBar(this);
-        circularSeekbar.adjustRadius(6, 2);
-        circularSeekbar.setMaxProgress(100);
-        circularSeekbar.setProgress(0);
-        circularSeekbar.setAngle(10);
-
-        addContentView(circularSeekbar, v.getLayoutParams());
-        final CircularSeekBarAnimation anim = new CircularSeekBarAnimation(circularSeekbar, 0, 100);
-        anim.setDuration(2000);
-        anim.setInterpolator(new MVAccelerateDecelerateInterpolator());
-        anim.setRepeatCount(1);
-        circularSeekbar.startAnimation(anim);
 
 
-        anim.setAnimationListener(new android.view.animation.Animation.AnimationListener() {
+    public LocalisationNearbyPlaces(Context c, String lat, String lng){
 
-
-            @Override
-            public void onAnimationStart(android.view.animation.Animation animation) {
-                // TODO Auto-generated method stub
-                LocalisationNearbyPlaces nearbyInfo = new LocalisationNearbyPlaces(getApplicationContext(), "1234", "123.5");
-                mMemoryCache = nearbyInfo.mMemoryCache;
-                dataPop = nearbyInfo.dataPop;
-
-            }
-
-            @Override
-            public void onAnimationRepeat(android.view.animation.Animation animation) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void onAnimationEnd(android.view.animation.Animation animation) {
-                // TODO Start your activity here.
-                Intent intent = new Intent(getApplicationContext(), ActivityChooser.class);
-                startActivity(intent);
-                toolbar.setVisibility(View.GONE);
-
-            }
-        });
-
-        /*final GoogleApiClient mGoogleApiClient = new GoogleApiClient
-                .Builder(this)
+        context = c;
+        final GoogleApiClient mGoogleApiClient = new GoogleApiClient
+                .Builder(context)
                 .addApi(Places.GEO_DATA_API)
                 .addApi(Places.PLACE_DETECTION_API)
                 .addConnectionCallbacks(this)
@@ -110,8 +45,14 @@ public class Anim extends AppCompatActivity implements GoogleApiClient.Connectio
 
         mGoogleApiClient.connect();
 
-        RequestQueue queue = Volley.newRequestQueue(this);
+        RequestQueue queue = Volley.newRequestQueue(context);
         String url = "http://52.11.50.74:9000";
+        StringBuilder sb = new StringBuilder(url);
+        sb.append("?");
+        sb.append("lat=" + lat);
+        sb.append("&");
+        sb.append("long=" + lng);
+        url = sb.toString();
         //url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=food&key=AIzaSyBbE2wO2MDZ2goETgsY__ifEq2dlOMLLc4";
         JsonObjectRequest stringRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, url,
                 new Response.Listener<JSONObject>() {
@@ -122,7 +63,7 @@ public class Anim extends AppCompatActivity implements GoogleApiClient.Connectio
                         Log.i("THIS IS ANIM", response + "");
                         try {
                             FormatData d = new FormatData(response, dataPop);
-                            DistanceMatrixTask dmatrix = new DistanceMatrixTask(getApplicationContext(), dataPop);
+                            DistanceMatrixTask dmatrix = new DistanceMatrixTask(context, dataPop);
 
                             for (int i = 0; i < dataPop.length; i++) {
                                 Log.i("id right now", dataPop[i][2] + "");
@@ -172,9 +113,12 @@ public class Anim extends AppCompatActivity implements GoogleApiClient.Connectio
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         // Add the request to the RequestQueue.
-        queue.add(stringRequest);*/
+        queue.add(stringRequest);
+
 
     }
+
+
 
     @Override
     public void onConnected(Bundle bundle) {
@@ -191,5 +135,7 @@ public class Anim extends AppCompatActivity implements GoogleApiClient.Connectio
         Log.i("onConnFailed", connectionResult + " ");
 
     }
+
+
 
 }
