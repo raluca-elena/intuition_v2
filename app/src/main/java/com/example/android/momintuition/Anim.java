@@ -49,23 +49,6 @@ public class Anim extends AppCompatActivity implements GoogleApiClient.Connectio
     public static LruCache<String, Bitmap> mMemoryCache = new LruCache<String, Bitmap>(20);
 
 
-
-    public  String getThemeName()
-    {
-        PackageInfo packageInfo;
-        try
-        {
-            packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA);
-            int themeResId = packageInfo.applicationInfo.theme;
-            return getResources().getResourceEntryName(themeResId);
-        }
-        catch (PackageManager.NameNotFoundException e)
-        {
-            return null;
-        }
-    }
-    
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -73,17 +56,7 @@ public class Anim extends AppCompatActivity implements GoogleApiClient.Connectio
         setContentView(R.layout.activity_first_page_animation);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
-        //final ActionBar actionBar = getSupportActionBar();
-        Log.i("THEME ", getThemeName() + "");
-
-        //danger
-        //actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#40000000")));
-//
-
-        ViewGroup v = (ViewGroup) findViewById(R.id.abc);
+        ViewGroup v = (ViewGroup) findViewById(R.id.layout);
 
         circularSeekbar = new CircularSeekBar(this);
         circularSeekbar.adjustRadius(6, 2);
@@ -93,7 +66,7 @@ public class Anim extends AppCompatActivity implements GoogleApiClient.Connectio
 
         addContentView(circularSeekbar, v.getLayoutParams());
         final CircularSeekBarAnimation anim = new CircularSeekBarAnimation(circularSeekbar, 0, 100);
-        anim.setDuration(3000);
+        anim.setDuration(1000);
         anim.setInterpolator(new MVAccelerateDecelerateInterpolator());
         anim.setRepeatCount(2);
         circularSeekbar.startAnimation(anim);
@@ -119,9 +92,7 @@ public class Anim extends AppCompatActivity implements GoogleApiClient.Connectio
                 // TODO Start your activity here.
                 Intent intent = new Intent(getApplicationContext(), ActivityChooser.class);
                 startActivity(intent);
-                //actionBar.hide();
-toolbar.setVisibility(View.GONE);
-                //startActivity(aboutIntent); // Here you go.
+                toolbar.setVisibility(View.GONE);
 
             }
         });
@@ -137,7 +108,7 @@ toolbar.setVisibility(View.GONE);
         mGoogleApiClient.connect();
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://52.11.50.74:9000";
+        String url = "http://52.11.50.74:9000";
         //url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=food&key=AIzaSyBbE2wO2MDZ2goETgsY__ifEq2dlOMLLc4";
         JsonObjectRequest stringRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, url,
                 new Response.Listener<JSONObject>() {
@@ -148,35 +119,35 @@ toolbar.setVisibility(View.GONE);
                         Log.i("THIS IS ANIM", response + "");
                         try {
                             FormatData d = new FormatData(response, dataPop);
-                            DistanceMatrixTask dmatrix = new DistanceMatrixTask(getApplicationContext(),dataPop);
+                            DistanceMatrixTask dmatrix = new DistanceMatrixTask(getApplicationContext(), dataPop);
 
-                            for (int i = 0; i < dataPop.length; i++){
-                                Log.i("id right now", dataPop[i][2] + "" );
-                                if (dataPop[i][2] != null){
-                                new ImageTask(120, 120,  mGoogleApiClient, dataPop[i][2]) {
-                                    @Override
-                                    protected void onPreExecute() {
-                                        // Display a temporary image to show while bitmap is loading.
+                            for (int i = 0; i < dataPop.length; i++) {
+                                Log.i("id right now", dataPop[i][2] + "");
+                                if (dataPop[i][2] != null) {
+                                    new ImageTask(120, 120, mGoogleApiClient, dataPop[i][2]) {
+                                        @Override
+                                        protected void onPreExecute() {
+                                            // Display a temporary image to show while bitmap is loading.
 
-                                        //h.img.setImageResource(R.drawable.bear);
-                                        Log.i("on pre exec--", this.placeID + "");
-                                    }
-
-                                    @Override
-                                    protected void onPostExecute(AttributedPhoto attributedPhoto) {
-
-                                        if (attributedPhoto != null) {
-                                            // Photo has been loaded, display it.
-                                            mMemoryCache.put(this.placeID, attributedPhoto.bitmap);
-                                            this.imageLoaded++;
-                                            Log.i("image loaded", this.imageLoaded + "");
+                                            //h.img.setImageResource(R.drawable.bear);
+                                            Log.i("on pre exec--", this.placeID + "");
                                         }
-                                    }
-                                }.execute(dataPop[i][2]);
+
+                                        @Override
+                                        protected void onPostExecute(AttributedPhoto attributedPhoto) {
+
+                                            if (attributedPhoto != null) {
+                                                // Photo has been loaded, display it.
+                                                mMemoryCache.put(this.placeID, attributedPhoto.bitmap);
+                                                this.imageLoaded++;
+                                                Log.i("image loaded", this.imageLoaded + "");
+                                            }
+                                        }
+                                    }.execute(dataPop[i][2]);
 
 
-                                } else break;}
-
+                                } else break;
+                            }
 
 
                         } catch (JSONException e) {
@@ -191,7 +162,7 @@ toolbar.setVisibility(View.GONE);
                 Log.i("this is the error", error + "");
             }
         });
-        int  MY_SOCKET_TIMEOUT_MS = 9000;
+        int MY_SOCKET_TIMEOUT_MS = 9000;
         Log.i("max retries", DefaultRetryPolicy.DEFAULT_MAX_RETRIES + "");
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(
                 MY_SOCKET_TIMEOUT_MS,
@@ -218,47 +189,4 @@ toolbar.setVisibility(View.GONE);
 
     }
 
-
-    public class MVAccelerateDecelerateInterpolator implements Interpolator {
-
-        // easeInOutQuint
-        public float getInterpolation(float t) {
-            float x = t*2.0f;
-            if (t<0.5f) return 0.5f*x*x*x*x*x;
-            x = (t-0.5f)*2-1;
-            return 0.5f*x*x*x*x*x+1;
-        }
-    }
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_first_page_animation, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Log.i("ZOMG", "Asdf");
-
-            //anim.startNow();
-
-            //View parent = (View)circularSeekbar.getParent();
-
-            //parent.invalidate();
-            //circularSeekbar.requestLayout();
-
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-    */
 }
