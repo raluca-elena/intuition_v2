@@ -32,12 +32,13 @@ public class LocalisationNearbyPlaces implements GoogleApiClient.ConnectionCallb
     public static String[][] dataPop = new String[100][4];
     public static LruCache<String, Bitmap> mMemoryCache = new LruCache<String, Bitmap>(200);
     public static int len = -1;
+    static String latLong;
 
 
 
 
     public LocalisationNearbyPlaces(final Context c, String lat, String lng){
-
+        latLong = lat + "," + lng;
         context = c;
         final GoogleApiClient mGoogleApiClient = new GoogleApiClient
                 .Builder(context)

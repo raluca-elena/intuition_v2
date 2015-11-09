@@ -23,6 +23,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     GoogleApiClient mGoogleApiClient;
     LruCache<String, Bitmap> bitmapLruCache;
     private String[][] mDataset;
+    String latLong;
     Context c;
 
 
@@ -31,11 +32,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public class MyOnClickListener implements View.OnClickListener
     {
 
-        String coord;
+        String latlng;
+        String source;
         String type;
-        public MyOnClickListener(String coord, String type) {
-            this.coord = coord;
+        public MyOnClickListener(String latlng, String type) {
+            this.latlng = latlng;
             this.type = type;
+            source = latLong;
 
             //Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
             //        Uri.parse("http://maps.google.com/maps?saddr=20.344,34.34&daddr=20.5666,45.345"));
@@ -49,9 +52,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public void onClick(View v)
         {
             //read your lovely variable
-
+            Log.i("lat", latlng);
 
             Intent intent = new Intent(c, DirectionsActivity.class);
+            intent.putExtra("START", source);
+            intent.putExtra("DESTINATION", latlng);
             //c.startActivity(i);
             // get teh parsed locations coord
 
@@ -83,11 +88,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
 
 
-    public MyAdapter(Context c, String[][] myDataset, GoogleApiClient mGoogleApiClient,  LruCache<String, Bitmap> bitmapLruCache) {
+    public MyAdapter(Context c, String[][] myDataset, GoogleApiClient mGoogleApiClient,  LruCache<String, Bitmap> bitmapLruCache, String latLong) {
         this.c = c;
         mDataset = myDataset;
         this.mGoogleApiClient = mGoogleApiClient;
         this.bitmapLruCache = bitmapLruCache;
+        this.latLong = latLong;
         Log.i("DataSet Node Server" , myDataset.length + "");
     }
 
@@ -113,7 +119,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             holder.img.setImageBitmap(bitmapLruCache.get(mDataset[position][2]));
         }
         //holder.itemView.setOnClickListener(optionListener);
-        holder.itemView.findViewById(R.id.car).setOnClickListener(optionListener);
+        holder.itemView.findViewById(R.id.car).setOnClickListener(new MyOnClickListener(mDataset[position][3], "car"));
     }
 
     @Override

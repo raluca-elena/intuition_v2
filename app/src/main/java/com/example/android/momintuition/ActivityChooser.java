@@ -34,6 +34,7 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     static String[][] dataPop;
+    String latLong;
     public static LruCache<String, Bitmap> mMemoryCache;
 
     private GoogleApiClient mGoogleApiClient;
@@ -45,6 +46,8 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
         //dataPop = LocalisationNearbyPlaces.dataPop;
         dataPop = Arrays.copyOfRange(LocalisationNearbyPlaces.dataPop, 0, LocalisationNearbyPlaces.len - 1);
         mMemoryCache = LocalisationNearbyPlaces.mMemoryCache;
+        latLong = LocalisationNearbyPlaces.latLong;
+
 
         //Intent i = new Intent(this, GMapListener.class);
         //startService(i);
@@ -77,7 +80,7 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
         //??
 
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new MyAdapter(this, dataPop, mGoogleApiClient, mMemoryCache);
+        mAdapter = new MyAdapter(this, dataPop, mGoogleApiClient, mMemoryCache, latLong);
         mRecyclerView.setAdapter(mAdapter);
 
     }

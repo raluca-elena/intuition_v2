@@ -38,12 +38,21 @@ import java.util.List;
 public class DirectionsActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
     MapView mapView;
     GoogleMap map;
+    String source;
+    String destination;
     static boolean crapyFlag = false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_directions);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            source = extras.getString("START");
+            Log.i("START is", source);
+            destination = extras.getString("DESTINATION");
+            Log.i("DESTINATION is", destination);
+        }
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         mapView = (MapView) findViewById(R.id.mapview);
@@ -107,16 +116,21 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
     public void onMapReady(GoogleMap googleMap) {
 
         this.map = googleMap;
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(43.65331,-79.38277), 5);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(45.70635739999999,27.1850024), 15);
         map.animateCamera(cameraUpdate);
 
         RequestQueue queue = Volley.newRequestQueue(this);
         String url ="https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal&key=AIzaSyDISYkoIYzQesb1VQ0eQQ6x0BaWxD87xWg";
         //url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=food&key=AIzaSyBbE2wO2MDZ2goETgsY__ifEq2dlOMLLc4";
+        url ="https://maps.googleapis.com/maps/api/directions/json?origin=45.7057933,27.1847602&destination=45.7062412,27.1828982&key=AIzaSyDISYkoIYzQesb1VQ0eQQ6x0BaWxD87xWg";
+
+
+
         JsonObjectRequest stringRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, url,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.i("-> GOT RESPONSE", response + "");
                         drawPath(response);
                     }} , new Response.ErrorListener() {
                         @Override
@@ -230,7 +244,7 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
                     (((double) lng / 1E5) ));
             poly.add(p);
         }
-
+        Log.i("poly:  ", poly+"");
         return poly;
     }
 

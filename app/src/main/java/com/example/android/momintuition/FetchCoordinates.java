@@ -39,10 +39,10 @@ public class FetchCoordinates {
             @Override
             public void onLocationChanged(Location location) {
                 // reverse geo-code location
-                double lati = location.getLatitude();
-                double lon = location.getLongitude();
+                lati = location.getLatitude();
+                longi = location.getLongitude();
                 Log.i("location", location.getLatitude() + " " + location.getLongitude());
-                LocalisationNearbyPlaces local = new LocalisationNearbyPlaces(c, new Double(lati).toString(), new Double(lon).toString());
+                LocalisationNearbyPlaces local = new LocalisationNearbyPlaces(c, new Double(lati).toString(), new Double(longi).toString());
 
             }
 
