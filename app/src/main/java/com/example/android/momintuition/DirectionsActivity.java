@@ -124,13 +124,13 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
         //url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=food&key=AIzaSyBbE2wO2MDZ2goETgsY__ifEq2dlOMLLc4";
         url ="https://maps.googleapis.com/maps/api/directions/json?origin=45.7057933,27.1847602&destination=45.7062412,27.1828982&key=AIzaSyDISYkoIYzQesb1VQ0eQQ6x0BaWxD87xWg";
 
+        url = "https://maps.googleapis.com/maps/api/directions/json?origin=" + source + "&" + "destination=" + destination + "&key=AIzaSyDISYkoIYzQesb1VQ0eQQ6x0BaWxD87xWg";
 
 
         JsonObjectRequest stringRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, url,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.i("-> GOT RESPONSE", response + "");
                         drawPath(response);
                     }} , new Response.ErrorListener() {
                         @Override
@@ -250,8 +250,11 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
 
     @Override
     public void onClick(View v) {
+        Log.i("source ->> ", source);
+        String url = "http://maps.google.com/maps?saddr" + source +  "&daddr=" + destination;
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                Uri.parse("http://maps.google.com/maps?saddr=45.7062727,27.1826593&daddr=45.7066196,27.1826913"));
+                //Uri.parse("http://maps.google.com/maps?saddr=45.7062727,27.1826593&daddr=45.7066196,27.1826913"));
+                Uri.parse(url));
         startActivityForResult(intent, 0);
         crapyFlag = true;
 
