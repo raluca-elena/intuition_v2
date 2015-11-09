@@ -68,7 +68,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     final View.OnClickListener optionListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Log.i("this view was clicked", "GET THE ID ");
+            Log.i("this view was clicked", "GET THE ID " + v.toString());
             //getWindow().getDecorView().invalidate();
 
             Intent intent = new Intent(c, DirectionsActivity.class);

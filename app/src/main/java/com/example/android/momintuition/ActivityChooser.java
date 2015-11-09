@@ -46,8 +46,8 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
         dataPop = Arrays.copyOfRange(LocalisationNearbyPlaces.dataPop, 0, LocalisationNearbyPlaces.len - 1);
         mMemoryCache = LocalisationNearbyPlaces.mMemoryCache;
 
-        Intent i = new Intent(this, GMapListener.class);
-        startService(i);
+        //Intent i = new Intent(this, GMapListener.class);
+        //startService(i);
 
         setContentView(R.layout.activity_activity_chooser);
 

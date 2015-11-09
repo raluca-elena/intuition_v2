@@ -50,7 +50,7 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
-        AccessibilityManager accessibilityManager =
+/*        AccessibilityManager accessibilityManager =
                 (AccessibilityManager) getApplicationContext().getSystemService(Context.ACCESSIBILITY_SERVICE);
 
         logInstalledandEnabledAccessiblityServices(getApplicationContext());
@@ -59,7 +59,7 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
             startActivityForResult(intent, 0);
         } else {
             Log.i("---ACCES IS ENABLED", accessibilityManager.isEnabled() + "");
-        }
+        }*/
 
         findViewById(R.id.arrow).setOnClickListener(this);
 
