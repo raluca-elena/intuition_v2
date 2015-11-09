@@ -11,17 +11,12 @@ import org.json.JSONObject;
  */
 public class FormatData {
     JSONObject data;
+    static int len;
     FormatData(JSONObject jo, String[][] dataPop) throws JSONException {
         data = jo;
-        System.out.print(data.toString());
 
-        JSONArray arr= data.names();
-        for (int i= 0;  i< arr.length(); i++) {
-           // Log.i("this is the oj", arr.get(i) + "");
-
-        }
         JSONArray s = (JSONArray) data.get("results");
-        int len = s.length();
+        len = s.length();
         //String[] mySet = new String[len];
         Log.i("length of array", s.length() + "");
         for (int j = 0; j < s.length()-1; j++) {
@@ -31,7 +26,6 @@ public class FormatData {
             dataPop[j][2] = x.get("place_id") + "";
             dataPop[j][3] = ((JSONObject)(((JSONObject) x.get("geometry")).get("location"))).get("lat")+","+
                             ((JSONObject)(((JSONObject) x.get("geometry")).get("location"))).get("lng")+"";
-            Log.i("LAT LONG", dataPop[j][3]+"");
         }
 
     }

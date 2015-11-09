@@ -41,8 +41,7 @@ public class DistanceMatrixTask{
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        // Display the first 500 characters of the response string.
-                        Log.i("Distance response", response + "");
+
                     }
                 }, new Response.ErrorListener() {
             @Override

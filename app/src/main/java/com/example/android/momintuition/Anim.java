@@ -18,36 +18,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.Interpolator;
 import android.support.v7.widget.Toolbar;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.android.gms.appdatasearch.GetRecentContextCall;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.places.Places;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 
 public class Anim extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     CircularSeekBar circularSeekbar;
-    public static String[][] dataPop = new String[100][4];
-    public static String[][] places = new String[100][2];
-
-    public static LruCache<String, Bitmap> mMemoryCache = new LruCache<String, Bitmap>(20);
-
+    FetchCoordinates coord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +55,7 @@ public class Anim extends AppCompatActivity implements GoogleApiClient.Connectio
 
             @Override
             public void onAnimationStart(android.view.animation.Animation animation) {
-                // TODO Auto-generated method stub
-                LocalisationNearbyPlaces nearbyInfo = new LocalisationNearbyPlaces(getApplicationContext(), "1234", "123.5");
-                mMemoryCache = nearbyInfo.mMemoryCache;
-                dataPop = nearbyInfo.dataPop;
+                coord = new FetchCoordinates(getApplicationContext());
 
             }
 
@@ -92,87 +67,11 @@ public class Anim extends AppCompatActivity implements GoogleApiClient.Connectio
 
             @Override
             public void onAnimationEnd(android.view.animation.Animation animation) {
-                // TODO Start your activity here.
-                Intent intent = new Intent(getApplicationContext(), ActivityChooser.class);
-                startActivity(intent);
+                // TODO anim should end when activity ready => when all images loaded
                 toolbar.setVisibility(View.GONE);
 
             }
         });
-
-        /*final GoogleApiClient mGoogleApiClient = new GoogleApiClient
-                .Builder(this)
-                .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
-
-        mGoogleApiClient.connect();
-
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://52.11.50.74:9000";
-        //url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=food&key=AIzaSyBbE2wO2MDZ2goETgsY__ifEq2dlOMLLc4";
-        JsonObjectRequest stringRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, url,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        //anim.cancel();
-                        // Display the first 500 characters of the response string.
-                        Log.i("THIS IS ANIM", response + "");
-                        try {
-                            FormatData d = new FormatData(response, dataPop);
-                            DistanceMatrixTask dmatrix = new DistanceMatrixTask(getApplicationContext(), dataPop);
-
-                            for (int i = 0; i < dataPop.length; i++) {
-                                Log.i("id right now", dataPop[i][2] + "");
-                                if (dataPop[i][2] != null) {
-                                    new ImageTask(120, 120, mGoogleApiClient, dataPop[i][2]) {
-                                        @Override
-                                        protected void onPreExecute() {
-                                            // Display a temporary image to show while bitmap is loading.
-
-                                            //h.img.setImageResource(R.drawable.bear);
-                                            Log.i("on pre exec--", this.placeID + "");
-                                        }
-
-                                        @Override
-                                        protected void onPostExecute(AttributedPhoto attributedPhoto) {
-
-                                            if (attributedPhoto != null) {
-                                                // Photo has been loaded, display it.
-                                                mMemoryCache.put(this.placeID, attributedPhoto.bitmap);
-                                                this.imageLoaded++;
-                                                Log.i("image loaded", this.imageLoaded + "");
-                                            }
-                                        }
-                                    }.execute(dataPop[i][2]);
-
-
-                                } else break;
-                            }
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i("this is the error", error + "");
-            }
-        });
-        int MY_SOCKET_TIMEOUT_MS = 9000;
-        Log.i("max retries", DefaultRetryPolicy.DEFAULT_MAX_RETRIES + "");
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
-                MY_SOCKET_TIMEOUT_MS,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);*/
 
     }
 

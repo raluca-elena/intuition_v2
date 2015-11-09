@@ -37,9 +37,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             this.coord = coord;
             this.type = type;
 
-            Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                    Uri.parse("http://maps.google.com/maps?saddr=20.344,34.34&daddr=20.5666,45.345"));
-            c.startActivity(intent);
+            //Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+            //        Uri.parse("http://maps.google.com/maps?saddr=20.344,34.34&daddr=20.5666,45.345"));
+            //c.startActivity(intent);
 
 
 
@@ -49,6 +49,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public void onClick(View v)
         {
             //read your lovely variable
+
+
+            Intent intent = new Intent(c, DirectionsActivity.class);
+            //c.startActivity(i);
+            // get teh parsed locations coord
+
+            // Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+            //         Uri.parse("http://maps.google.com/maps?saddr=20.344,34.34&daddr=20.5666,45.345"));
+            c.startActivity(intent);
         }
 
     };
@@ -159,11 +168,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
             @Override
             protected void onPostExecute(AttributedPhoto attributedPhoto) {
-                if (attributedPhoto != null) {
+
+                if (attributedPhoto != null && attributedPhoto.bitmap != null) {
                     // Photo has been loaded, display it.
+                    Log.i("HALABALULA", "ALOHA");
                     h.img.setImageBitmap(attributedPhoto.bitmap);
-                    bitmapLruCache.put(placeID, attributedPhoto.bitmap);
-                    this.imageLoaded++;
+                    if (placeID != null){
+                        bitmapLruCache.put(placeID, attributedPhoto.bitmap);
+                        this.imageLoaded++;
+                    }
                 }
             }
         }.execute(placeId);

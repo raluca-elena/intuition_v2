@@ -2,6 +2,7 @@ package com.example.android.momintuition;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.LruCache;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +18,9 @@ import android.view.View;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 
 public class ActivityChooser extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -28,12 +33,18 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    static String[][] dataPop = Anim.dataPop;
+    static String[][] dataPop;
+    public static LruCache<String, Bitmap> mMemoryCache;
+
     private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //dataPop = LocalisationNearbyPlaces.dataPop;
+        dataPop = Arrays.copyOfRange(LocalisationNearbyPlaces.dataPop, 0, LocalisationNearbyPlaces.len - 1);
+        mMemoryCache = LocalisationNearbyPlaces.mMemoryCache;
 
         Intent i = new Intent(this, GMapListener.class);
         startService(i);
@@ -60,16 +71,14 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
 
+        //??
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        //??
+
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new MyAdapter(this, dataPop, mGoogleApiClient, Anim.mMemoryCache);
+        mAdapter = new MyAdapter(this, dataPop, mGoogleApiClient, mMemoryCache);
         mRecyclerView.setAdapter(mAdapter);
-
-
-        //TO INVESTIGATE
-        //FetchCoordinates fetchCordinates = new FetchCoordinates(getApplicationContext());
-        //fetchCordinates.execute();
 
     }
 

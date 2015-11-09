@@ -22,13 +22,13 @@ public class mLocationListener implements LocationListener {
         } catch (Exception e) {
             Log.i("WHY THE HELL", "YOU DON't SAY ANYTHING!");
         }
-        Looper.myLooper().quit();
+        //Looper.myLooper().quit();
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
         Log.i("onStatusChanged***", status + "");
-        Looper.myLooper().quit();
+        //Looper.myLooper().quit();
     }
 
     @Override

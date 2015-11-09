@@ -1,8 +1,10 @@
 package com.example.android.momintuition;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.util.LruCache;
 import android.view.animation.Animation;
@@ -26,13 +28,15 @@ import org.json.JSONObject;
 public class LocalisationNearbyPlaces implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
     Context context;
+    //datapop should have the same size as the elements in the jsonResponse form server..no more entries
     public static String[][] dataPop = new String[100][4];
-    public static LruCache<String, Bitmap> mMemoryCache = new LruCache<String, Bitmap>(20);
+    public static LruCache<String, Bitmap> mMemoryCache = new LruCache<String, Bitmap>(200);
+    public static int len = -1;
 
 
 
 
-    public LocalisationNearbyPlaces(Context c, String lat, String lng){
+    public LocalisationNearbyPlaces(final Context c, String lat, String lng){
 
         context = c;
         final GoogleApiClient mGoogleApiClient = new GoogleApiClient
@@ -58,23 +62,17 @@ public class LocalisationNearbyPlaces implements GoogleApiClient.ConnectionCallb
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        //anim.cancel();
-                        // Display the first 500 characters of the response string.
-                        Log.i("THIS IS ANIM", response + "");
                         try {
                             FormatData d = new FormatData(response, dataPop);
-                            DistanceMatrixTask dmatrix = new DistanceMatrixTask(context, dataPop);
+                            len = d.len;
+                            //DistanceMatrixTask dmatrix = new DistanceMatrixTask(context, dataPop);
 
-                            for (int i = 0; i < dataPop.length; i++) {
-                                Log.i("id right now", dataPop[i][2] + "");
+                            for (int i = 0; i < len; i++) {
+                                Log.i("--> id right now", dataPop[i][2] + "");
                                 if (dataPop[i][2] != null) {
                                     new ImageTask(120, 120, mGoogleApiClient, dataPop[i][2]) {
                                         @Override
                                         protected void onPreExecute() {
-                                            // Display a temporary image to show while bitmap is loading.
-
-                                            //h.img.setImageResource(R.drawable.bear);
-                                            Log.i("on pre exec--", this.placeID + "");
                                         }
 
                                         @Override
@@ -82,16 +80,23 @@ public class LocalisationNearbyPlaces implements GoogleApiClient.ConnectionCallb
 
                                             if (attributedPhoto != null) {
                                                 // Photo has been loaded, display it.
+                                                Log.i("placeID - loaded photo", " " + this.placeID);
                                                 mMemoryCache.put(this.placeID, attributedPhoto.bitmap);
                                                 this.imageLoaded++;
-                                                Log.i("image loaded", this.imageLoaded + "");
-                                            }
+                                                }
                                         }
                                     }.execute(dataPop[i][2]);
 
 
                                 } else break;
                             }
+
+
+                            //DANGER
+                            Intent intent = new Intent();
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.setClass(c, ActivityChooser.class);
+                            c.startActivity(intent);
 
 
                         } catch (JSONException e) {
@@ -107,7 +112,7 @@ public class LocalisationNearbyPlaces implements GoogleApiClient.ConnectionCallb
             }
         });
         int MY_SOCKET_TIMEOUT_MS = 9000;
-        Log.i("max retries", DefaultRetryPolicy.DEFAULT_MAX_RETRIES + "");
+        //Log.i("max retries", DefaultRetryPolicy.DEFAULT_MAX_RETRIES + "");
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(
                 MY_SOCKET_TIMEOUT_MS,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
@@ -120,9 +125,10 @@ public class LocalisationNearbyPlaces implements GoogleApiClient.ConnectionCallb
 
 
 
+
     @Override
     public void onConnected(Bundle bundle) {
-        Log.i("I am connected", "maps");
+        //Log.i("I am connected", "maps");
     }
 
     @Override
