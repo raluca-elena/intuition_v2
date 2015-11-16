@@ -27,9 +27,6 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 1;
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;//1 min/2
     static boolean canGetLocation = false;
-    Location location;
-    double latitude;
-    double longitude;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -43,8 +40,7 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //dataPop = LocalisationNearbyPlaces.dataPop;
-        dataPop = Arrays.copyOfRange(LocalisationNearbyPlaces.dataPop, 0, LocalisationNearbyPlaces.len - 1);
+        dataPop = Arrays.copyOfRange(LocalisationNearbyPlaces.dataPop, 0, LocalisationNearbyPlaces.len -1);
         mMemoryCache = LocalisationNearbyPlaces.mMemoryCache;
         latLong = LocalisationNearbyPlaces.latLong;
 

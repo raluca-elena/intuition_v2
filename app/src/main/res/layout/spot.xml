@@ -16,32 +16,44 @@
             android:id="@+id/image"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/teddy" />
+            android:src="@drawable/teddy"
+            />
 
-        <RelativeLayout
+        <TableLayout
             android:id="@+id/car"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:stretchColumns="3"
+            android:paddingLeft="25dp"
+            android:paddingTop="20dp"
+
             android:layout_toRightOf="@id/image">
-            <ImageView
-                android:id="@+id/ic_directions_car_black_18dp"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginTop="13dp"
-                android:layout_marginLeft="13dp"
-                android:layout_marginBottom="13dp"
-                android:src="@drawable/ic_directions_car_black_18dp"/>
-            <TextView
-                android:text="ALOHA"
-                android:layout_marginTop="13dp"
+            <TableRow>
+                <TextView
+                android:id="@+id/map"
+                android:text="VIEW MAP"
+                 android:padding="18dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/ic_directions_car_black_18dp"
                 android:textColor="#99000000"
-                />
-        </RelativeLayout>
+                    android:background="#40000000"/>
+            </TableRow>
 
-        <RelativeLayout
+            <TableRow>
+                <TextView
+                android:id="@+id/directions"
+                android:text="DIRECTIONS"
+
+                    android:padding="18dp"
+                android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#10000000"
+                android:textColor="#99000000" />
+            </TableRow>
+
+        </TableLayout>
+
+<!--        <RelativeLayout
             android:id="@+id/walk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -103,18 +115,20 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/ic_directions_transit_black_18dp"
                 android:textColor="#99000000" />
-        </RelativeLayout>
+        </RelativeLayout>-->
 
         <TextView
             android:id="@+id/title"
+            android:paddingLeft="10dp"
+            android:paddingBottom="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="125dp"
+            android:layout_height="match_parent"
+            android:elevation="110dp"
             android:gravity="center_vertical"
             android:layout_below="@+id/image"
             android:text="TITLE"
-            android:textColor="@android:color/holo_blue_bright"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:textColor="#99000000"/>
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

@@ -19,15 +19,15 @@ import org.json.JSONObject;
 public class DistanceMatrixTask{
 
     Context context;
-    String[][] coord;
+    String[] coord;
     RequestQueue queue;
 
-    DistanceMatrixTask(Context c, String[][] coord){
+    DistanceMatrixTask(Context c, String[] coord, String home){
         context = c;
         queue = Volley.newRequestQueue(c);
         this.coord = coord;
         for (int i = 0; i< coord.length; i++){
-            request(coord[i][3]);
+            request(home, coord[i]);
         }
     }
 
@@ -35,12 +35,14 @@ public class DistanceMatrixTask{
     String homecoord = "37.4031455,-122.0753819";
     //url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=food&key=AIzaSyBbE2wO2MDZ2goETgsY__ifEq2dlOMLLc4";
 
-    void request(String coords){
-        String uri = url + homecoord+  "&destinations=" + coords + "&sensor=false&key=AIzaSyDISYkoIYzQesb1VQ0eQQ6x0BaWxD87xWg";
+    void request(String home, String coords){
+        String uri = url + home+  "&destinations=" + coords + "&sensor=false&key=AIzaSyDISYkoIYzQesb1VQ0eQQ6x0BaWxD87xWg";
         JsonObjectRequest stringRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, uri,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+
+                        Log.i("response", response.toString());
 
                     }
                 }, new Response.ErrorListener() {
