@@ -19,6 +19,8 @@ import com.google.android.gms.location.places.PlacePhotoMetadataBuffer;
 import com.google.android.gms.location.places.PlacePhotoMetadataResult;
 import com.google.android.gms.location.places.Places;
 
+import static android.support.v4.app.ActivityCompat.startActivityForResult;
+
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     GoogleApiClient mGoogleApiClient;
     LruCache<String, Bitmap> bitmapLruCache;
@@ -26,15 +28,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     String latLong;
     Context c;
 
-
-
-    ////
-    public class MyOnClickListener implements View.OnClickListener
-    {
+    public class MyOnClickListener implements View.OnClickListener {
 
         String latlng;
         String source;
         String type;
+
         public MyOnClickListener(String latlng, String type) {
             this.latlng = latlng;
             this.type = type;
@@ -45,12 +44,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             //c.startActivity(intent);
 
 
-
         }
 
         @Override
-        public void onClick(View v)
-        {
+        public void onClick(View v) {
             //read your lovely variable
             Log.i("lat", latlng);
 
@@ -65,7 +62,64 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             c.startActivity(intent);
         }
 
-    };
+    }
+
+    ;
+
+
+    ////
+
+    public class OnClickListenerDirections implements View.OnClickListener {
+
+        String latlng;
+        String source;
+        String type;
+
+        public OnClickListenerDirections(String latlng, String type) {
+            this.latlng = latlng;
+            this.type = type;
+            source = latLong;
+
+            //Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+            //        Uri.parse("http://maps.google.com/maps?saddr=20.344,34.34&daddr=20.5666,45.345"));
+            //c.startActivity(intent);
+
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            //read your lovely variable
+            Log.i("lat", latlng);
+
+            //Intent intent = new Intent(c, DirectionsActivity.class);
+            //intent.putExtra("START", source);
+            //intent.putExtra("DESTINATION", latlng);
+            ///
+
+
+            Log.i("source ->> ", source);
+            String url = "http://maps.google.com/maps?saddr" + source +  "&daddr=" + latlng;
+            Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                    //Uri.parse("http://maps.google.com/maps?saddr=45.7062727,27.1826593&daddr=45.7066196,27.1826913"));
+                    Uri.parse(url));
+
+
+
+
+
+            //c.startActivity(i);
+            // get teh parsed locations coord
+
+            // Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+            //         Uri.parse("http://maps.google.com/maps?saddr=20.344,34.34&daddr=20.5666,45.345"));
+
+
+            c.startActivity(intent);
+        }}
+
+
+
 
 
 
@@ -119,7 +173,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             holder.img.setImageBitmap(bitmapLruCache.get(mDataset[position][2]));
         }
         //holder.itemView.setOnClickListener(optionListener);
-        holder.itemView.findViewById(R.id.car).setOnClickListener(new MyOnClickListener(mDataset[position][3], "car"));
+        holder.itemView.findViewById(R.id.map).setOnClickListener(new MyOnClickListener(mDataset[position][3], "car"));
+        holder.itemView.findViewById(R.id.directions).setOnClickListener(new OnClickListenerDirections(mDataset[position][3], "car"));
+
     }
 
     @Override
