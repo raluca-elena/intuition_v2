@@ -17,7 +17,6 @@ public class FormatData {
 
         JSONArray s = (JSONArray) data.get("results");
         len = s.length();
-        //String[] mySet = new String[len];
         Log.i("length of array", s.length() + "");
         for (int j = 0; j < s.length()-1; j++) {
             JSONObject x = (JSONObject) s.get(j);

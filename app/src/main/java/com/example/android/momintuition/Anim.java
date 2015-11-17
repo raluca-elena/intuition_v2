@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -19,6 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
@@ -33,6 +36,8 @@ public class Anim extends AppCompatActivity implements GoogleApiClient.Connectio
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_page_animation);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //ImageView mImageViewFilling = (ImageView) findViewById(R.id.imageview_animation_list_filling);
+        //((AnimationDrawable) mImageViewFilling.getBackground()).start();
         setSupportActionBar(toolbar);
         ViewGroup v = (ViewGroup) findViewById(R.id.layout);
 

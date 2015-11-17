@@ -23,7 +23,6 @@ public class FetchCoordinates {
     public static double longi = 0.0;
 
     public LocationManager locationManager;
-    //public mLocationListener ll;
 
     Context c;
 

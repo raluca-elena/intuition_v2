@@ -22,9 +22,7 @@ import com.google.android.gms.location.places.Places;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * Created by rpodiuc on 10/24/15.
- */
+
 public class LocalisationNearbyPlaces implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
     Context context;
@@ -33,9 +31,6 @@ public class LocalisationNearbyPlaces implements GoogleApiClient.ConnectionCallb
     public static LruCache<String, Bitmap> mMemoryCache = new LruCache<String, Bitmap>(200);
     public static int len = -1;
     static String latLong;
-
-
-
 
     public LocalisationNearbyPlaces(final Context c, String lat, String lng){
         latLong = lat + "," + lng;
@@ -92,8 +87,6 @@ public class LocalisationNearbyPlaces implements GoogleApiClient.ConnectionCallb
                                 } else break;
                             }
 
-
-                            //DANGER
                             Intent intent = new Intent();
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.setClass(c, ActivityChooser.class);
@@ -113,7 +106,6 @@ public class LocalisationNearbyPlaces implements GoogleApiClient.ConnectionCallb
             }
         });
         int MY_SOCKET_TIMEOUT_MS = 9000;
-        //Log.i("max retries", DefaultRetryPolicy.DEFAULT_MAX_RETRIES + "");
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(
                 MY_SOCKET_TIMEOUT_MS,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,

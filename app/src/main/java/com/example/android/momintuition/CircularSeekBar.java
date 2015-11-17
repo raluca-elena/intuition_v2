@@ -162,7 +162,8 @@ public class CircularSeekBar extends View {
      */
     private boolean CALLED_FROM_ANGLE = false;
 
-    private boolean SHOW_SEEKBAR = true;
+    //DANGER
+    private boolean SHOW_SEEKBAR = false;
     /**
      * The rectangle containing our circles and arcs.
      */
