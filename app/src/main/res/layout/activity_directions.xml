@@ -11,14 +11,14 @@
         android:layout_height="match_parent"
         android:clickable="true" />
 
-    <android.support.v7.widget.Toolbar
+   <!-- <android.support.v7.widget.Toolbar
         xmlns:app="http://schemas.android.com/apk/res-auto"
 
         android:id="@+id/toolbar2"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:paddingTop="@dimen/abc_action_bar_default_padding_material"
-        android:background="#40000000" />
+        android:background="#40000000" />-->
 
 
     <ImageView

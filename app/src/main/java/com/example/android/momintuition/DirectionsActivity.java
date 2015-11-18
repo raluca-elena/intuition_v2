@@ -3,6 +3,7 @@ import android.accessibilityservice.AccessibilityServiceInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.v7.app.ActionBar;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
@@ -26,6 +28,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -46,6 +50,8 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_directions);
 
+        Toast toast = Toast.makeText(getApplicationContext(), "ALOHA", Toast.LENGTH_LONG);
+        toast.show();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             source = extras.getString("START");
@@ -53,8 +59,8 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
             destination = extras.getString("DESTINATION");
             Log.i("DESTINATION is", destination);
         }
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
-        setSupportActionBar(toolbar);
+        //final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+        //setSupportActionBar(toolbar);
         mapView = (MapView) findViewById(R.id.mapview);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -185,6 +191,13 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
                         .color(Color.parseColor("#05b1fb"))//Google maps blue color
                         .geodesic(true)
         );
+        Marker start = map.addMarker(new MarkerOptions()
+                .position(list.get(0))
+                .title("your location"));
+        Marker stop = map.addMarker(new MarkerOptions()
+                .position(list.get(list.size()-1))
+                .title("destination"));
+
 
     }
 
