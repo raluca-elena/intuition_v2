@@ -162,7 +162,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 //        holder.activity.setText(mDataset[position][1]);
 
         if (mDataset[position][2] == null){
-            Log.i("get no entry rolling", "BEAR in bind");
+            Log.i("get no entry rolling", "yellowbear in bind");
             holder.img.setImageResource(R.drawable.bear);}
         else if (bitmapLruCache.get(mDataset[position][2]) == null) {
             holder.img.setImageResource(R.drawable.bear);

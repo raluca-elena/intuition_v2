@@ -6,6 +6,6 @@
     <string name="title_activity_sign_up">SignUp</string>
     <string name="user">john.dow@mymail.com</string>
     <string name="title_activity_activity_chooser">ActivityChooser</string>
-    <string name="title_activity_first_page_animation">SearchingPlayLocations...</string>
+    <string name="title_activity_first_page_animation">Searching Nearby Locations...</string>
     <string name="title_activity_directions">DirectionsActivity</string>
 </resources>

@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class CircularSeekBar extends View {
 
     private static boolean alreadyDone = false;
-    ArrayList<MultiCircularSeekbar> sb = new ArrayList<MultiCircularSeekbar>(5);
+    ArrayList<MultiCircularSeekbar> sb = new ArrayList<MultiCircularSeekbar>(3);
     private Context mContext;
     private OnSeekChangeListener mListener;
     /**
@@ -191,19 +191,21 @@ public class CircularSeekBar extends View {
         innerColor.setColor(Color.parseColor("#ff33b5e5")); // Set default background color to
         circleColor.setAntiAlias(true);
         innerColor.setAntiAlias(true);
+        //DANGER
         //circleRing.setAntiAlias(true);
 
-        circleColor.setStrokeWidth(5);
+        circleColor.setStrokeWidth(15);
         innerColor.setStrokeWidth(5);
         circleRing.setStrokeWidth(5);
 
-        //circleColor.setStyle(Paint.Style.FILL);
+        circleColor.setStyle(Paint.Style.FILL_AND_STROKE);
+
         innerColor.setStyle(Paint.Style.STROKE);
-        circleRing.setStyle(Paint.Style.STROKE);
+        circleRing.setStyle(Paint.Style.FILL);
 
 
-        //instantioation of new circles
-        for (int i = 0; i < 5; i++) {
+        //instantioation of new circles -- how many circles you want
+        for (int i = 0; i < 3; i++) {
             sb.add(new MultiCircularSeekbar());
         }
 
@@ -270,10 +272,10 @@ public class CircularSeekBar extends View {
         cy = height / 2; // Center Y for circle
 
         //aici se seteaza raza cercului
-        outerRadius = size / 2;
+        outerRadius = (size - 10) / 2;
         for (int i = 0; i < sb.size(); i++) {
             MultiCircularSeekbar sbItem = sb.get(i);
-            sbItem.outerRadius = (size / 2) / (i + 1) - (i * i + 3) + 5;
+            sbItem.outerRadius = ((size-10) / 2) / (i + 1) - (i * i + 3) + 5;
             sbItem.innerRadius = sbItem.outerRadius - barWidth;
             sbItem.left = cx - sbItem.outerRadius; // Calculate left bound of our rect
             sbItem.right = cx + sbItem.outerRadius;
@@ -317,9 +319,9 @@ public class CircularSeekBar extends View {
     @Override
     protected void onDraw(Canvas canvas) {
 
-        canvas.drawColor(Color.TRANSPARENT);
+        //canvas.drawColor(Color.TRANSPARENT);
         canvas.drawArc(rect, startAngle, angle, false, innerColor);
-        canvas.drawArc(rect1, startAngle, angle, false, innerColor);
+        //canvas.drawArc(rect1, startAngle, angle, false, innerColor);
         for (int i = 0; i < sb.size(); i++) {
 
             MultiCircularSeekbar item = sb.get(i);
@@ -336,7 +338,7 @@ public class CircularSeekBar extends View {
                 item.dy = getYFromAngle(item);
             }
 
-            drawMarkerAtProgress(canvas);
+            //drawMarkerAtProgress(canvas);
         }
         super.onDraw(canvas);
     }
@@ -671,7 +673,6 @@ public class CircularSeekBar extends View {
      * the onSeekChange event occurs, that object's appropriate
      * method is invoked.
      *
-     * @see  OnSeekChangeEvent
      */
     public interface OnSeekChangeListener {
 

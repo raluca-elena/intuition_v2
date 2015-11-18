@@ -36,13 +36,11 @@ public class Anim extends AppCompatActivity implements GoogleApiClient.Connectio
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_page_animation);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //ImageView mImageViewFilling = (ImageView) findViewById(R.id.imageview_animation_list_filling);
-        //((AnimationDrawable) mImageViewFilling.getBackground()).start();
         setSupportActionBar(toolbar);
         ViewGroup v = (ViewGroup) findViewById(R.id.layout);
 
         circularSeekbar = new CircularSeekBar(this);
-        circularSeekbar.adjustRadius(6, 2);
+        circularSeekbar.adjustRadius(3, 2);
         circularSeekbar.setMaxProgress(100);
         circularSeekbar.setProgress(0);
         circularSeekbar.setAngle(10);
@@ -51,7 +49,7 @@ public class Anim extends AppCompatActivity implements GoogleApiClient.Connectio
         final CircularSeekBarAnimation anim = new CircularSeekBarAnimation(circularSeekbar, 0, 100);
         anim.setDuration(2000);
         anim.setInterpolator(new MVAccelerateDecelerateInterpolator());
-        anim.setRepeatCount(1);
+        anim.setRepeatCount(2);
         circularSeekbar.startAnimation(anim);
 
 
