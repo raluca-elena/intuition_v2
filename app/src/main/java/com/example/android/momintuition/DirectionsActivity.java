@@ -66,41 +66,20 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
         TextView text = (TextView) layout.findViewById(R.id.text);
         text.setText("Use arrow button for directions...");
 
-        // Toast...
         Toast toast = new Toast(getApplicationContext());
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         toast.setDuration(Toast.LENGTH_LONG);
         toast.setView(layout);
         toast.show();
 
-
-
-        //Toast toast = Toast.makeText(getApplicationContext(), "ALOHA", Toast.LENGTH_LONG);
-        //toast.show();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             source = extras.getString("START");
-            Log.i("START is", source);
             destination = extras.getString("DESTINATION");
-            Log.i("DESTINATION is", destination);
         }
-        //final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
-        //setSupportActionBar(toolbar);
         mapView = (MapView) findViewById(R.id.mapview);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
-
-/*        AccessibilityManager accessibilityManager =
-                (AccessibilityManager) getApplicationContext().getSystemService(Context.ACCESSIBILITY_SERVICE);
-
-        logInstalledandEnabledAccessiblityServices(getApplicationContext());
-        if (!isAccessibilityEnabled(getApplicationContext(), "com.example.android.momtuition/com.example.android.momintuition.GMapListener")) {
-            Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
-            startActivityForResult(intent, 0);
-        } else {
-            Log.i("---ACCES IS ENABLED", accessibilityManager.isEnabled() + "");
-        }*/
-
 
         View select=findViewById(R.id.arrow);
 
@@ -305,7 +284,6 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
         Log.i("source ->> ", source);
         String url = "http://maps.google.com/maps?saddr" + source +  "&daddr=" + destination;
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                //Uri.parse("http://maps.google.com/maps?saddr=45.7062727,27.1826593&daddr=45.7066196,27.1826913"));
                 Uri.parse(url));
         startActivityForResult(intent, 0);
         crapyFlag = true;

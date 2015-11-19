@@ -47,7 +47,7 @@ public class Anim extends AppCompatActivity implements GoogleApiClient.Connectio
 
         addContentView(circularSeekbar, v.getLayoutParams());
         anim = new CircularSeekBarAnimation(circularSeekbar, 0, 100);
-        anim.setDuration(2000);
+        anim.setDuration(3000);
         anim.setInterpolator(new MVAccelerateDecelerateInterpolator());
         anim.setRepeatCount(2);
         circularSeekbar.startAnimation(anim);

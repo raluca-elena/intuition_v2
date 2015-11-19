@@ -44,15 +44,9 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
         mMemoryCache = LocalisationNearbyPlaces.mMemoryCache;
         latLong = LocalisationNearbyPlaces.latLong;
 
-
-        //Intent i = new Intent(this, GMapListener.class);
-        //startService(i);
-
         setContentView(R.layout.activity_activity_chooser);
-
         //DANGER
         getWindow().setBackgroundDrawable(new ColorDrawable(0));
-
         //DANGER
         mGoogleApiClient = new GoogleApiClient
                 .Builder(this)
@@ -70,10 +64,8 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
 
-        //??
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        //??
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new MyAdapter(this, dataPop, mGoogleApiClient, mMemoryCache, latLong);
