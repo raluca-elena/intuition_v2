@@ -10,6 +10,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -73,7 +78,16 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
             Log.i("---ACCES IS ENABLED", accessibilityManager.isEnabled() + "");
         }*/
 
-        findViewById(R.id.arrow).setOnClickListener(this);
+
+        View select=findViewById(R.id.arrow);
+
+        Animation mAnimation = new AlphaAnimation(1, 0);
+        mAnimation.setDuration(1000);
+        mAnimation.setInterpolator(new LinearInterpolator());
+        mAnimation.setRepeatCount(Animation.INFINITE);
+        mAnimation.setRepeatMode(Animation.REVERSE);
+        select.startAnimation(mAnimation);
+        select.setOnClickListener(this);
 
     }
 
@@ -262,6 +276,8 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
 
     @Override
     public void onClick(View v) {
+        v.clearAnimation();
+
         Log.i("source ->> ", source);
         String url = "http://maps.google.com/maps?saddr" + source +  "&daddr=" + destination;
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
