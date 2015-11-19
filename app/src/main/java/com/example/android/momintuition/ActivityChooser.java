@@ -39,7 +39,7 @@ public class ActivityChooser extends Activity implements GoogleApiClient.Connect
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Anim.circularSeekbar.clearAnimation();
         dataPop = Arrays.copyOfRange(LocalisationNearbyPlaces.dataPop, 0, LocalisationNearbyPlaces.len -1);
         mMemoryCache = LocalisationNearbyPlaces.mMemoryCache;
         latLong = LocalisationNearbyPlaces.latLong;

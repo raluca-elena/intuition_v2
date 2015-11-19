@@ -27,9 +27,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 
 public class Anim extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-    CircularSeekBar circularSeekbar;
+    public static CircularSeekBar circularSeekbar;
     FetchCoordinates coord;
-
+    CircularSeekBarAnimation anim ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -46,7 +46,7 @@ public class Anim extends AppCompatActivity implements GoogleApiClient.Connectio
         circularSeekbar.setAngle(10);
 
         addContentView(circularSeekbar, v.getLayoutParams());
-        final CircularSeekBarAnimation anim = new CircularSeekBarAnimation(circularSeekbar, 0, 100);
+        anim = new CircularSeekBarAnimation(circularSeekbar, 0, 100);
         anim.setDuration(2000);
         anim.setInterpolator(new MVAccelerateDecelerateInterpolator());
         anim.setRepeatCount(2);
@@ -58,6 +58,7 @@ public class Anim extends AppCompatActivity implements GoogleApiClient.Connectio
 
             @Override
             public void onAnimationStart(android.view.animation.Animation animation) {
+
                 coord = new FetchCoordinates(getApplicationContext());
 
             }

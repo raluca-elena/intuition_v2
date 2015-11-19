@@ -156,7 +156,8 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
     public void onMapReady(GoogleMap googleMap) {
 
         this.map = googleMap;
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(45.70635739999999,27.1850024), 15);
+        String[] coordonates = source.split(",");
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(coordonates[0]), Double.parseDouble(coordonates[1])), 15);
         map.animateCamera(cameraUpdate);
 
         RequestQueue queue = Volley.newRequestQueue(this);
