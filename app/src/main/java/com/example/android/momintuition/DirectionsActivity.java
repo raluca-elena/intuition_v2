@@ -3,13 +3,9 @@ import android.accessibilityservice.AccessibilityServiceInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
@@ -27,6 +23,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -197,7 +194,9 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
         Marker stop = map.addMarker(new MarkerOptions()
                 .position(list.get(list.size()-1))
                 .title("destination"));
-
+        start.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.homemarker));
+        stop.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.mapmarker));
+        stop.showInfoWindow();
 
     }
 
