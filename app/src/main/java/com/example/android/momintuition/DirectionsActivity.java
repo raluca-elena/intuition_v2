@@ -6,8 +6,12 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
 import android.view.animation.AlphaAnimation;
@@ -15,6 +19,7 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -52,8 +57,26 @@ public class DirectionsActivity extends AppCompatActivity implements OnMapReadyC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_directions);
 
-        Toast toast = Toast.makeText(getApplicationContext(), "ALOHA", Toast.LENGTH_LONG);
+        LayoutInflater inflater = getLayoutInflater();
+
+
+        View layout = inflater.inflate(R.layout.toast,
+                (ViewGroup) findViewById(R.id.custom_toast_layout_id));
+
+        TextView text = (TextView) layout.findViewById(R.id.text);
+        text.setText("Use arrow button for directions...");
+
+        // Toast...
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
         toast.show();
+
+
+
+        //Toast toast = Toast.makeText(getApplicationContext(), "ALOHA", Toast.LENGTH_LONG);
+        //toast.show();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             source = extras.getString("START");
